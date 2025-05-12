@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>AR Menu</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Botão que abre o modal -->
+  <button id="abrirModal" class="btn-acesso">Área do cliente</button>
+
+  <!-- Modal -->
+  <div id="modal" class="modal hidden">
+    <div class="modal-content">
+      <span id="fecharModal" class="fechar">&times;</span>
+      <h2>Área do cliente</h2>
+      <p>Para acessar, clique em acessar. Se ainda não tem conta, clique em criar cadastro.</p>
+      <!-- Botões dentro do modal -->
+      <button onclick="window.location.href='Acesso.html'">Acessar</button>
+      <button onclick="window.location.href='cadastro.html'">Criar cadastro</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

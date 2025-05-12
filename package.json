@@ -1,0 +1,20 @@
+{
+  "name": "ar-menu-site",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ranie2019/ar-menu-site.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ranie2019/ar-menu-site/issues"
+  },
+  "homepage": "https://github.com/ranie2019/ar-menu-site#readme"
+}
