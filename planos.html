@@ -4,31 +4,40 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Planos</title>
+  <!-- Link para o arquivo CSS que define o estilo da página -->
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- Cabeçalho da página, com a barra de navegação -->
   <header class="top-bar">
     <div class="btn-container">
+      <!-- Botão "Ver Planos" (não foi especificada funcionalidade, então permanece como está) -->
       <button class="btn-vermelho">Ver Planos</button>
-      <button class="btn-vermelho">Entrar</button>
+      <!-- Botão "Entrar" redirecionando para a página acesso.html -->
+      <button class="btn-vermelho" onclick="window.location.href='acesso.html'">Entrar</button>
     </div>
   </header>
 
+  <!-- Conteúdo principal da página -->
   <main class="conteudo-planos">
     <h1>Escolha o seu plano</h1>
+    <!-- Seção com os cards de planos -->
     <section class="cards">
+      <!-- Card do plano Plus -->
       <div class="card">
         <h2>Plus (1 ano)</h2>
         <p class="preco">R$ 87,20</p>
         <button class="btn-vermelho">SE CADASTRE</button>
       </div>
 
+      <!-- Card do plano Pro, que é destacado -->
       <div class="card destaque">
         <h2>Pro (1 ano)</h2>
         <p class="preco">R$ 119,20</p>
         <button class="btn-vermelho">SE CADASTRE</button>
       </div>
 
+      <!-- Card do plano Ultra -->
       <div class="card">
         <h2>Ultra (1 ano)</h2>
         <p class="preco">R$ 167,20</p>
@@ -37,6 +46,7 @@
     </section>
   </main>
 
+  <!-- Link para o arquivo JavaScript que define as funcionalidades da página -->
   <script src="main.js"></script>
 </body>
 </html>

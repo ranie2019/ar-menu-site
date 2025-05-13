@@ -1,52 +1,167 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro - AR Menu</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cadastro do Cliente - Mensal</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: white;
+      font-family: Arial, sans-serif;
+      color: black;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 800px;
+      padding: 40px;
+    }
+
+    h2 {
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      width: 100%;
+    }
+
+    .row {
+      display: flex;
+      gap: 30px;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+
+    .input-container {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    label {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    input {
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #d6d6d6; /* cinza mais escuro */
+    }
+
+    button {
+      padding: 12px 20px;
+      font-size: 16px;
+      background-color: red;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+      align-self: center; /* centraliza apenas o botão */
+    }
+
+    button:hover {
+      background-color: darkred;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Cadastro de Cliente</h2>
+  <div class="container">
+    <h2>Cadastro do Cliente</h2>
 
-        <form id="formCadastro">
-            <!-- Campos de Cadastro -->
-            <div class="input-container">
-                <label for="nome">Nome:</label>
-                <input type="text" id="nome" placeholder="Nome" required />
-            </div>
-            
-            <div class="input-container">
-                <label for="email">E-mail:</label>
-                <input type="email" id="email" placeholder="Email" required />
-            </div>
+    <form id="formCadastro">
+      <!-- Nome da Empresa -->
+      <div class="row">
+        <div class="input-container" style="flex: 1;">
+          <label for="empresa">Nome da Empresa</label>
+          <input type="text" id="empresa" name="empresa" placeholder="Digite o nome da empresa" required />
+        </div>
+      </div>
 
-            <div class="input-container">
-                <label for="telefone">Telefone:</label>
-                <input type="tel" id="telefone" placeholder="Telefone" required />
-            </div>
+      <!-- E-mail e Telefone -->
+      <div class="row">
+        <div class="input-container">
+          <label for="email">E-mail</label>
+          <input type="email" id="email" name="email" placeholder="Digite o e-mail" required />
+        </div>
+        <div class="input-container">
+          <label for="telefone">Telefone</label>
+          <input type="tel" id="telefone" name="telefone" placeholder="(00) 00000-0000" required />
+        </div>
+      </div>
 
-            <div class="input-container">
-                <label for="cnpj">CNPJ:</label>
-                <input type="text" id="cnpj" placeholder="CNPJ" required />
-            </div>
+      <!-- CNPJ -->
+      <div class="row">
+        <div class="input-container" style="flex: 1;">
+          <label for="cnpj">CNPJ da Empresa</label>
+          <input type="text" id="cnpj" name="cnpj" placeholder="00.000.000/0000-00" required />
+        </div>
+      </div>
 
-            <!-- Campos de Senha -->
-            <div class="input-container">
-                <label for="senha">Senha:</label>
-                <input type="password" id="senha" placeholder="Senha" required />
-            </div>
+      <!-- Senha -->
+      <div class="row">
+        <div class="input-container" style="flex: 1;">
+          <label for="senha">Senha</label>
+          <input type="password" id="senha" name="senha" placeholder="Digite a senha" required />
+        </div>
+      </div>
 
-            <div class="input-container">
-                <label for="confirmarSenha">Confirmar Senha:</label>
-                <input type="password" id="confirmarSenha" placeholder="Confirmar Senha" required />
-            </div>
+      <!-- Confirmar Senha -->
+      <div class="row">
+        <div class="input-container" style="flex: 1;">
+          <label for="confirmarSenha">Confirmar Senha</label>
+          <input type="password" id="confirmarSenha" name="confirmarSenha" placeholder="Confirme a senha" required />
+        </div>
+      </div>
 
-            <button type="submit">Cadastrar</button>
-        </form>
-    </div>
+      <!-- Botão -->
+      <button type="submit">Cadastrar</button>
+    </form>
+  </div>
 
-    <script src="script.js"></script>
+  <!-- Máscaras de input -->
+  <script>
+    document.getElementById('telefone').addEventListener('input', function (e) {
+      let x = e.target.value.replace(/\D/g, '').slice(0, 11);
+      if (x.length > 6) {
+        e.target.value = `(${x.slice(0, 2)}) ${x.slice(2, 7)}-${x.slice(7, 11)}`;
+      } else if (x.length > 2) {
+        e.target.value = `(${x.slice(0, 2)}) ${x.slice(2)}`;
+      } else {
+        e.target.value = x.replace(/^(\d{0,2})/, '($1');
+      }
+    });
+
+    document.getElementById('cnpj').addEventListener('input', function (e) {
+      let x = e.target.value.replace(/\D/g, '').slice(0, 14);
+      let formatado = x;
+
+      if (x.length > 12) {
+        formatado = `${x.slice(0, 2)}.${x.slice(2, 5)}.${x.slice(5, 8)}/${x.slice(8, 12)}-${x.slice(12, 14)}`;
+      } else if (x.length > 8) {
+        formatado = `${x.slice(0, 2)}.${x.slice(2, 5)}.${x.slice(5, 8)}/${x.slice(8)}`;
+      } else if (x.length > 5) {
+        formatado = `${x.slice(0, 2)}.${x.slice(2, 5)}.${x.slice(5)}`;
+      } else if (x.length > 2) {
+        formatado = `${x.slice(0, 2)}.${x.slice(2)}`;
+      }
+
+      e.target.value = formatado;
+    });
+  </script>
 </body>
 </html>
