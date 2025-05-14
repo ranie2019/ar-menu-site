@@ -11,7 +11,7 @@
   <!-- Cabeçalho da página, com a barra de navegação -->
   <header class="top-bar">
     <div class="btn-container">
-      <!-- Botão "Entrar" redirecionando para a página acesso.html -->
+      <!-- Botão "login" redirecionando para a página login.html -->
       <button class="btn-vermelho" onclick="window.location.href='login.html'">login</button>
     </div>
   </header>
@@ -19,27 +19,28 @@
   <!-- Conteúdo principal da página -->
   <main class="conteudo-planos">
     <h1>Escolha o seu plano</h1>
+    
     <!-- Seção com os cards de planos -->
     <section class="cards">
       <!-- Card do plano Plus -->
       <div class="card">
-        <h2>Plus (1 ano)</h2>
-        <p class="preco">R$ 87,20</p>
-        <button class="btn-vermelho">SE CADASTRE</button>
+        <h2>Plus (1 Mês)</h2>
+        <p class="preco">R$ 300,00</p>
+        <button class="btn-vermelho" onclick="window.location.href='vendaPlus.html'">Assine</button>
       </div>
 
       <!-- Card do plano Pro, que é destacado -->
       <div class="card destaque">
         <h2>Pro (1 ano)</h2>
-        <p class="preco">R$ 119,20</p>
-        <button class="btn-vermelho">SE CADASTRE</button>
+        <p class="preco">R$ 3300,00</p>
+        <button class="btn-vermelho" onclick="window.location.href='vendaPro.html'">Assine</button>
       </div>
 
       <!-- Card do plano Ultra -->
       <div class="card">
-        <h2>Ultra (1 ano)</h2>
-        <p class="preco">R$ 167,20</p>
-        <button class="btn-vermelho">SE CADASTRE</button>
+        <h2>Ultra (5 anos)</h2>
+        <p class="preco">R$ 6900,00</p>
+        <button class="btn-vermelho" onclick="window.location.href='vendaUltra.html'">Assine</button>
       </div>
     </section>
   </main>
