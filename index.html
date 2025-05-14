@@ -6,6 +6,12 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+
+  <!-- Faixa de topo branca com botão Perfil -->
+  <header class="header">
+    <h1 class="titulo">Sistema</h1>
+  </header>
+
   <!-- Botão que abre o modal -->
   <button id="abrirModal" class="btn-acesso">Área do cliente</button>
 
@@ -21,6 +27,32 @@
     </div>
   </div>
 
+  <!-- Conteúdo principal da página -->
+  <main class="conteudo-planos">
+    <h1>Escolha o seu plano</h1>
+
+    <section class="cards">
+      <div class="card">
+        <h2>Plus (1 Mês)</h2>
+        <p class="preco">R$ 300,00</p>
+        <button class="btn-vermelho" onclick="window.location.href='cadastro.html'">cadastre-se</button>
+      </div>
+
+      <div class="card destaque">
+        <h2>Pro (1 ano)</h2>
+        <p class="preco">R$ 3300,00</p>
+        <button class="btn-vermelho" onclick="window.location.href='cadastro.html'">cadastre-se</button>
+      </div>
+
+      <div class="card">
+        <h2>Ultra (5 anos)</h2>
+        <p class="preco">R$ 6900,00</p>
+        <button class="btn-vermelho" onclick="window.location.href='cadastro.html'">cadastre-se</button>
+      </div>
+    </section>
+  </main>
+
   <script src="script.js"></script>
+  <script src="main.js"></script> <!-- Garante que o dropdown funcione -->
 </body>
 </html>
