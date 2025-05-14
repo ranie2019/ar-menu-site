@@ -1,188 +1,228 @@
 /* =====================
-   RESET DE MARGENS E PADDINGS
+   INDEX
 ===================== */
+
+/* Estilo geral da página index */
 body {
-  font-family: Arial, sans-serif; /* Define a fonte do corpo da página */
-  margin: 0; /* Remove a margem padrão do body */
-  padding: 0; /* Remove o padding padrão do body */
+  background-color: #fff;
+  font-family: Arial, sans-serif;
 }
 
-/* =====================
-   ESTILO DO BOTÃO FLUTUANTE
-===================== */
+/* Título principal da index */
+h1 {
+  text-align: center;
+  font-size: 3rem;
+  margin: 20px;
+  color: #333;
+}
+
+/* Cabeçalho da página index */
+header {
+  background-color: #e50914;
+  padding: 15px 0;
+}
+
+header .btn-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+header .btn-vermelho {
+  background-color: #e50914;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+header .btn-vermelho:hover {
+  background-color: #c2080b;
+}
+
+/* Botão flutuante para acesso */
 .btn-acesso {
-  position: fixed; /* Define o botão de forma fixa na tela */
-  top: 20px; /* Define a posição do botão 20px do topo */
-  right: 20px; /* Define a posição do botão 20px da direita */
-  padding: 12px 20px; /* Adiciona o padding ao botão */
-  background-color: #c70039; /* Cor de fundo do botão */
-  color: white; /* Cor do texto do botão */
-  border: none; /* Remove a borda padrão */
-  border-radius: 20px; /* Arredonda os cantos do botão */
-  font-size: 16px; /* Define o tamanho da fonte */
-  cursor: pointer; /* Torna o cursor em forma de mãozinha quando passar sobre o botão */
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 12px 20px;
+  background-color: #c70039;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  font-size: 16px;
+  cursor: pointer;
 }
 
-/* =====================
-   ESTILO DO MODAL
-===================== */
+/* Modal da área do cliente */
 .modal {
-  position: fixed; /* Faz com que o modal fique fixo na tela */
-  top: 0; /* Posiciona o modal no topo da tela */
-  left: 0; /* Posiciona o modal à esquerda da tela */
-  width: 100%; /* Faz o modal ocupar toda a largura da tela */
-  height: 100%; /* Faz o modal ocupar toda a altura da tela */
-  background: rgba(0, 0, 0, 0.6); /* Cor de fundo semi-transparente */
-  display: flex; /* Usa o Flexbox para centralizar o conteúdo */
-  align-items: center; /* Alinha o conteúdo verticalmente no centro */
-  justify-content: center; /* Alinha o conteúdo horizontalmente no centro */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .modal.hidden {
-  display: none; /* Esconde o modal quando a classe "hidden" é aplicada */
+  display: none;
 }
 
-/* =====================
-   ESTILO DO CONTEÚDO DO MODAL
-===================== */
 .modal-content {
-  background: white; /* Cor de fundo do modal */
-  padding: 30px; /* Espaçamento interno do conteúdo */
-  border-radius: 10px; /* Arredonda os cantos do conteúdo */
-  text-align: center; /* Alinha o texto no centro */
-  width: 300px; /* Define a largura do modal */
-  position: relative; /* Posiciona o conteúdo em relação a outros elementos */
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+  width: 300px;
+  position: relative;
 }
 
 .modal-content h2 {
-  color: #c70039; /* Cor do título dentro do modal */
+  color: #c70039;
 }
 
-/* =====================
-   ESTILO DOS BOTÕES DO MODAL
-===================== */
 .modal-content button {
-  display: block; /* Exibe os botões como blocos */
-  width: 100%; /* Faz os botões ocuparem toda a largura */
-  margin: 10px 0; /* Adiciona uma margem vertical entre os botões */
-  padding: 10px; /* Adiciona o padding aos botões */
-  font-size: 16px; /* Tamanho da fonte dos botões */
-  border: 2px solid #c70039; /* Borda do botão */
-  border-radius: 6px; /* Arredonda os cantos da borda */
-  background-color: white; /* Cor de fundo do botão */
-  color: #c70039; /* Cor do texto */
-  cursor: pointer; /* Torna o cursor em forma de mãozinha */
+  display: block;
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid #c70039;
+  border-radius: 6px;
+  background-color: white;
+  color: #c70039;
+  cursor: pointer;
 }
 
 .modal-content button:first-of-type {
-  background-color: #c70039; /* Altera a cor de fundo do primeiro botão */
-  color: white; /* Altera a cor do texto do primeiro botão */
+  background-color: #c70039;
+  color: white;
 }
 
-/* =====================
-   ESTILO DO BOTÃO DE FECHAR O MODAL
-===================== */
 .fechar {
-  position: absolute; /* Posiciona o botão de fechar no canto superior direito */
-  top: 10px; /* Posição do botão de fechar 10px do topo */
-  right: 15px; /* Posição do botão de fechar 15px da direita */
-  font-size: 20px; /* Tamanho da fonte do botão de fechar */
-  cursor: pointer; /* Torna o cursor em forma de mãozinha */
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 20px;
+  cursor: pointer;
 }
 
 /* =====================
-   ESTILO DO FORMULÁRIO (CADASTRO E ACESSO)
+   LOGIN 
 ===================== */
+
+/* Define altura total da tela e centraliza vertical e horizontalmente */
+body, html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Envolve todo o conteúdo de login para centralização */
+.login-wrapper {
+  display: flex;
+  align-items: center;        /* Centraliza verticalmente */
+  justify-content: center;    /* Centraliza horizontalmente */
+  height: 100vh;              /* Ocupa 100% da altura da viewport */
+  background-color: #f9f9f9;  /* Fundo claro opcional */
+}
+
+/* Container do formulário de login */
 .container {
-  width: 100%; /* Define a largura do container */
-  max-width: 400px; /* Define a largura máxima do container */
-  margin: 0 auto; /* Centraliza o container horizontalmente */
-  padding: 20px; /* Adiciona o padding interno do container */
-  background-color: white; /* Cor de fundo do formulário */
-  border-radius: 8px; /* Arredonda os cantos do formulário */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adiciona sombra ao redor do formulário */
-  text-align: center; /* Alinha o texto do formulário ao centro */
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
 }
 
-/* =====================
-   ESTILO DO TÍTULO NO FORMULÁRIO
-===================== */
-h2 {
-  color: #c70039; /* Cor do título */
-  margin-bottom: 20px; /* Espaçamento abaixo do título */
+/* Título do login */
+.container h2 {
+  color: #c70039;
+  margin-bottom: 20px;
 }
 
-/* =====================
-   ESTILO DOS CAMPOS DE INPUT
-===================== */
+/* Grupo de entrada */
 .input-container {
-  margin-bottom: 20px; /* Adiciona margem abaixo de cada campo de input */
+  margin-bottom: 20px;
 }
 
-label {
-  display: block; /* Exibe o label como bloco */
-  margin-bottom: 5px; /* Margem abaixo do label */
-  font-weight: bold; /* Deixa o texto do label em negrito */
+/* Rótulo dos campos */
+.input-container label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
 }
 
-/* Estilo para os campos de input */
-input[type="text"], input[type="email"], input[type="password"], input[type="tel"] {
-  width: 100%; /* Define a largura dos inputs como 100% */
-  padding: 10px; /* Adiciona padding nos inputs */
-  border: 1px solid #ddd; /* Borda fina e clara */
-  border-radius: 4px; /* Arredonda os cantos dos inputs */
-  font-size: 14px; /* Define o tamanho da fonte nos inputs */
+/* Estilo dos campos de input */
+.input-container input[type="text"],
+.input-container input[type="email"],
+.input-container input[type="password"],
+.input-container input[type="tel"] {
+  width: calc(100% - 20px); /* Reduz a largura para deixar espaço nas laterais */
+  padding: 10px;             /* Espaço interno do campo */
+  margin: 0 auto;            /* Centraliza horizontalmente */
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  display: block;            /* Garante que o auto funcione */
 }
 
-/* =====================
-   ESTILO DOS BOTÕES DE CADASTRO E ACESSO
-===================== */
+/* Botão de login */
 button.btn {
-  width: 100%; /* Largura total do botão */
-  padding: 10px; /* Padding dentro do botão */
-  background-color: #c70039; /* Cor de fundo do botão */
-  border: none; /* Remove a borda do botão */
-  border-radius: 6px; /* Arredonda os cantos do botão */
-  color: white; /* Cor do texto do botão */
-  font-size: 16px; /* Tamanho da fonte */
-  cursor: pointer; /* Cursor em forma de mãozinha */
-  transition: background-color 0.3s, box-shadow 0.3s; /* Efeito de transição suave */
+  width: 100%;
+  padding: 10px;
+  background-color: #c70039;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, box-shadow 0.3s;
 }
 
-/* Efeito de hover no botão */
 button.btn:hover {
-  background-color: #900c3f; /* Muda a cor de fundo quando passa o mouse */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adiciona uma sombra ao botão */
+  background-color: #900c3f;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* =====================
-   ESTILO DO LINK PARA Acesso e Cadastro
-===================== */
-p {
-  margin-top: 20px; /* Adiciona margem superior ao parágrafo */
-}
-
-p a {
-  color: #c70039; /* Cor do link */
-  text-decoration: none; /* Remove o sublinhado */
-}
-
-p a:hover {
-  text-decoration: underline; /* Adiciona o sublinhado quando passa o mouse */
-}
-
-/* =====================
-   ESTILO DO LINK "ESQUECI MINHA SENHA"
-===================== */
+/* Link de esqueci a senha */
 .forgot-password {
-  margin-top: 10px; /* Adiciona margem superior ao link "Esqueci minha senha" */
+  margin-top: 10px;
 }
 
 .forgot-password a {
-  color: #c70039; /* Cor do link */
-  text-decoration: none; /* Remove o sublinhado */
+  color: #c70039;
+  text-decoration: none;
 }
 
 .forgot-password a:hover {
-  text-decoration: underline; /* Adiciona o sublinhado ao passar o mouse */
+  text-decoration: underline;
+}
+
+
+/* =====================
+   CADASTRO 
+===================== */
+
+/* A estrutura de cadastro é compartilhada com login */
+p {
+  margin-top: 20px;
+}
+
+p a {
+  color: #c70039;
+  text-decoration: none;
+}
+
+p a:hover {
+  text-decoration: underline;
 }
