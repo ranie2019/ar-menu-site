@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Página de Planos</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Cabeçalho da página com botão de login -->
+  <header class="top-bar">
+    <div class="btn-container">
+      <button class="btn-vermelho" onclick="window.location.href='acesso.html'">Login</button>
+    </div>
+  </header>
+
+  <!-- Conteúdo dos planos -->
+  <main class="conteudo-planos">
+    <section class="cards">
+      <!-- Exemplo de card de plano -->
+      <div class="card destaque">
+        <h2>Plano Premium</h2>
+        <p class="preco">R$ 99,99/mês</p>
+        <button onclick="window.location.href='cadastro.html'">Cadastrar</button>
+      </div>
+      <!-- Adicionar outros planos aqui -->
+    </section>
+
+    <!-- Cartões de opções de pagamento -->
+    <section class="cartoes">
+      <h3>Formas de pagamento</h3>
+      <!-- Cartões de pagamento podem ser inseridos aqui -->
+      <div class="cartao">
+        <img src="cartao-visa.png" alt="Visa">
+      </div>
+      <div class="cartao">
+        <img src="cartao-mastercard.png" alt="Mastercard">
+      </div>
+      <!-- Adicionar outros cartões conforme necessário -->
+    </section>
+  </main>
+
+</body>
+</html>
