@@ -7,6 +7,20 @@
     
     <!-- Link para o CSS externo -->
     <link rel="stylesheet" href="style.css">
+    
+    <script>
+        // Função para validar o formulário
+        function validarLogin(event) {
+            const email = document.getElementById('email').value;
+            const senha = document.getElementById('senha').value;
+            
+            // Verificar se ambos os campos foram preenchidos
+            if (email === "" || senha === "") {
+                event.preventDefault(); // Impede o envio do formulário
+                alert("Por favor, preencha todos os campos.");
+            }
+        }
+    </script>
 </head>
 <body>
 
@@ -18,7 +32,7 @@
             <h2>Acesso ao Sistema</h2>
 
             <!-- Formulário de login -->
-            <form action="login_processar.php" method="POST">
+            <form action="login_processar.php" method="POST" onsubmit="validarLogin(event)">
 
                 <!-- Campo de e-mail -->
                 <div class="input-container">
@@ -33,7 +47,7 @@
                 </div>
 
                 <!-- Botão de acesso -->
-                <button type="submit" class="btn">Acessar</button>
+                <button class="btn-vermelho" type="submit">Acessar</button>
             </form>
 
             <!-- Link para recuperação de senha -->

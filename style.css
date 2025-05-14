@@ -177,10 +177,11 @@ body, html {
 }
 
 /* Botão de login */
-button.btn {
+button.btn,
+button.btn-vermelho {
   width: 100%;
   padding: 10px;
-  background-color: #c70039;
+  background-color: #c70039;   /* Cor vermelha do botão */
   border: none;
   border-radius: 6px;
   color: white;
@@ -189,7 +190,8 @@ button.btn {
   transition: background-color 0.3s, box-shadow 0.3s;
 }
 
-button.btn:hover {
+button.btn:hover,
+button.btn-vermelho:hover {
   background-color: #900c3f;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
