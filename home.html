@@ -23,6 +23,23 @@
     </div>
   </header>
 
+  <!-- Menu de Cardápio com botões em cascata -->
+  <div class="cardapio-menu">
+    <button id="cardapio-btn">Cardápio</button>
+
+    <!-- Botões de seleção de categoria -->
+    <div id="dropdownCardapio" class="dropdown-cardapio">
+      <button onclick="mostrarItens('bebidas')">Bebidas</button>
+      <button onclick="mostrarItens('pizzas')">Pizzas</button>
+      <button onclick="mostrarItens('lanches')">Lanches</button>
+      <button onclick="mostrarItens('sobremesas')">Sobremesas</button>
+      <button onclick="mostrarItens('porcoes')">Porções</button>
+    </div>
+  </div>
+
+  <!-- Área onde serão exibidos os nomes dos objetos -->
+  <div id="itensContainer" class="itens-container"></div>
+
   <!-- Script -->
   <script src="main.js"></script>
 </body>

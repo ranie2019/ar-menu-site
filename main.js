@@ -131,5 +131,53 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
-
 });
+
+// ============================== CARDÁPIO - Objetos 3D por categoria ==============================
+const objetos3D = {
+  bebidas: ['Heineken', 'Redbull', 'Coca-Cola', 'Suco'],
+  pizzas: ['Pizza Calabresa', 'Pizza Marguerita', 'Pizza 4 Queijos'],
+  lanches: ['Hambúrguer', 'Cheeseburger', 'Hot Dog'],
+  sobremesas: ['Sundae', 'Chocolate Quente', 'Sorvete'],
+  porcoes: ['Batata Frita', 'Nuggets', 'Anéis de Cebola']
+};
+
+// Controla qual categoria está ativa (exibida)
+let categoriaAtiva = null;
+
+// ============================== Evento para alternar menu "Perfil" ==============================
+document.getElementById('profile-btn').addEventListener('click', function () {
+  document.getElementById('dropdown').classList.toggle('show');
+});
+
+// ============================== Evento para alternar menu "Cardápio" ==============================
+document.getElementById('cardapio-btn').addEventListener('click', function () {
+  document.getElementById('dropdownCardapio').classList.toggle('show');
+});
+
+// ============================== Função para mostrar itens da categoria selecionada ==============================
+function mostrarItens(categoria) {
+  const container = document.getElementById('itensContainer'); // Seleciona o container onde os itens serão exibidos
+
+  // Se clicar na mesma categoria que já está ativa, limpa e esconde os itens
+  if (categoriaAtiva === categoria) {
+    container.innerHTML = '';   // Remove os itens exibidos
+    categoriaAtiva = null;      // Reseta o estado de categoria ativa
+    return;                     // Encerra a função
+  }
+
+  categoriaAtiva = categoria;   // Define nova categoria ativa
+  container.innerHTML = '';     // Limpa os itens anteriores
+
+  // Para cada item da categoria, cria uma caixa com animação
+  objetos3D[categoria].forEach((nome, index) => {
+    const box = document.createElement('div');   // Cria uma nova div para o item
+    box.className = 'item-box';                  // Aplica a classe com estilo e animação
+    box.textContent = nome;                      // Define o texto da caixa como o nome do item
+
+    // Aplica um pequeno atraso na animação para efeito cascata
+    box.style.animationDelay = `${index * 0.1}s`;
+
+    container.appendChild(box);                  // Adiciona a caixa ao container
+  });
+}

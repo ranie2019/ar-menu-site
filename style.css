@@ -389,104 +389,206 @@ p a:hover {
 }
 
 /* =====================
-   HOME
+   HOME - Estilos da página inicial
 ===================== */
 
-/* Fundo branco da página */
+/* Estiliza o corpo da página */
 body {
-  margin: 0;
-  padding: 0;
-  background-color: #fff;
-  font-family: Arial, sans-serif;
+  margin: 0;                /* Remove margens padrão do navegador */
+  padding: 0;               /* Remove padding padrão */
+  background-color: #fff;   /* Define fundo branco para a página */
+  font-family: Arial, sans-serif; /* Define a fonte principal como Arial ou similar */
 }
 
-/* Cabeçalho */
+/* Cabeçalho principal da página */
 .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 40px;
-  background-color: white;
-  border-bottom: 1px solid #ddd;
+  display: flex;                   /* Ativa layout flexível para alinhar itens horizontalmente */
+  justify-content: space-between; /* Espaça os itens do header nas extremidades (esquerda e direita) */
+  align-items: center;             /* Alinha verticalmente os itens ao centro */
+  padding: 20px 40px;              /* Espaçamento interno: 20px em cima/baixo e 40px nas laterais */
+  background-color: white;         /* Fundo branco para o cabeçalho */
+  border-bottom: 1px solid #ddd;   /* Linha cinza clara abaixo para separar do conteúdo */
 }
 
-/* Título centralizado */
+/* Título central no cabeçalho */
 .titulo {
-  flex: 1;
-  text-align: center;
-  color: #c70039;
-  margin: 0;
-  font-size: 24px;
+  flex: 1;                        /* Faz o título ocupar todo espaço possível no meio */
+  text-align: center;             /* Centraliza o texto horizontalmente */
+  color: #c70039;                 /* Define a cor do texto para um vermelho forte */
+  margin: 0;                      /* Remove qualquer margem padrão ao redor do título */
+  font-size: 34px;                /* Define tamanho da fonte para ser visível e legível */
 }
 
-/* Menu de perfil */
+/* Container do menu de perfil, para controle de posicionamento do dropdown */
 .profile-menu {
-  position: relative;
+  position: relative;             /* Define posição relativa para que o dropdown seja posicionado corretamente em relação a ele */
 }
 
-/* Botão de perfil */
+/* Botão que abre o menu de perfil */
 #profile-btn {
-  background-color: #c70039;
-  color: white;
-  border: none;
-  padding: 10px 16px;
-  border-radius: 20px;
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 14px;
+  background-color: #c70039;      /* Cor vermelha forte no fundo */
+  color: white;                   /* Texto branco */
+  border: none;                  /* Remove borda padrão */
+  padding: 10px 16px;             /* Espaçamento interno do botão para ficar confortável */
+  border-radius: 20px;            /* Bordas arredondadas, formato de pílula */
+  cursor: pointer;                /* Muda cursor para mãozinha quando passa por cima (indica clicável) */
+  font-weight: bold;              /* Texto em negrito para destaque */
+  font-size: 24px;                /* Tamanho da fonte pequeno mas legível */
 }
 
-/* Conteúdo do dropdown */
+/* Dropdown que aparece ao clicar no botão perfil */
 .dropdown-content {
-  position: absolute;
-  top: 120%;
-  right: 0;
-  background-color: #111;
-  color: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-  width: 250px;
-  overflow: hidden;
-  max-height: 0;
-  transition: max-height 0.3s ease;
-  z-index: 100;
+  position: absolute;             /* Posição absoluta para aparecer em cima dos outros elementos */
+  top: 120%;                     /* Posiciona o dropdown logo abaixo do botão (120% do tamanho do botão) */
+  right: 0;                      /* Alinha o dropdown à direita do botão */
+  background-color: #111;        /* Fundo preto muito escuro para contraste */
+  color: white;                  /* Texto branco dentro do dropdown */
+  border-radius: 8px;            /* Cantos arredondados */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3); /* Sombra suave para destacar o dropdown */
+  width: 250px;                  /* Largura fixa para o menu */
+  overflow: hidden;              /* Esconde conteúdo que ultrapasse o tamanho */
+  max-height: 0;                 /* Esconde o dropdown definindo altura zero inicialmente */
+  transition: max-height 0.3s ease; /* Animação suave para quando o dropdown abrir ou fechar */
+  z-index: 100;                  /* Garante que fique acima de outros elementos na página */
 }
 
-/* Quando ativado */
+/* Estado ativo do dropdown: mostra o conteúdo expandindo a altura */
 .dropdown-content.show {
-  max-height: 500px;
+  max-height: 500px;             /* Define altura máxima suficiente para mostrar o conteúdo */
 }
 
-/* Avatar e XP */
+/* Container para informações do usuário no dropdown */
 .user-info {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 16px;
+  display: flex;                 /* Alinha avatar e texto em linha */
+  align-items: center;           /* Centraliza verticalmente */
+  gap: 10px;                    /* Espaço entre avatar e texto */
+  padding: 16px;                 /* Espaçamento interno para conforto visual */
 }
 
+/* Avatar circular com fundo rosa e texto branco */
 .avatar {
-  background-color: #e91e63;
-  color: white;
-  width: 40px;
-  height: 40px;
-  font-size: 20px;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
+  background-color: #e91e63;    /* Fundo rosa forte */
+  color: white;                 /* Texto branco */
+  width: 40px;                  /* Largura fixa */
+  height: 40px;                 /* Altura fixa para ser círculo */
+  font-size: 20px;              /* Texto maior para visibilidade */
+  font-weight: bold;            /* Texto em negrito */
+  display: flex;                /* Flex para centralizar texto */
+  align-items: center;          /* Centraliza verticalmente */
+  justify-content: center;      /* Centraliza horizontalmente */
+  border-radius: 50%;           /* Torna o elemento circular */
 }
 
-/* Links do menu */
+/* Estilo dos links no dropdown */
 .dropdown-content a {
-  display: block;
-  padding: 12px 16px;
-  color: white;
-  text-decoration: none;
-  border-top: 1px solid #333;
+  display: block;               /* Cada link ocupa uma linha inteira */
+  padding: 12px 16px;           /* Espaçamento interno confortável para clique */
+  color: white;                 /* Cor do texto branca */
+  text-decoration: none;        /* Remove sublinhado dos links */
+  border-top: 1px solid #333;   /* Linha fina acima para separar itens */
 }
 
+/* Efeito visual ao passar o mouse sobre os links */
 .dropdown-content a:hover {
-  background-color: #222;
+  background-color: #222;       /* Fundo escuro para destacar o item */
 }
+
+/* ===================== CARDÁPIO CASCATA (botão e dropdown) ===================== */
+
+/* Container do menu do cardápio, posicionado no canto superior esquerdo */
+.cardapio-menu {
+  position: absolute;           /* Posição absoluta para posicionamento fixo */
+  top: 20px;                   /* Distância de 20px do topo da página */
+  left: 20px;                  /* Distância de 20px da esquerda da página */
+}
+
+/* Botão principal do cardápio */
+#cardapio-btn {
+  background-color: #e50914;   /* Vermelho forte para destaque */
+  color: white;                /* Texto branco */
+  border: none;                /* Sem borda */
+  padding: 10px 16px;          /* Espaçamento confortável */
+  font-size: 16px;             /* Texto de tamanho médio */
+  border-radius: 6px;          /* Bordas levemente arredondadas */
+  cursor: pointer;             /* Cursor muda para indicar que é clicável */
+}
+
+/* Dropdown que contém os botões de categoria do cardápio */
+.dropdown-cardapio {
+  display: none;               /* Inicialmente escondido */
+  position: absolute;          /* Posição absoluta para aparecer abaixo do botão */
+  top: 60px;                   /* Posicionado 45px abaixo do botão principal */
+  left: 0;                    /* Alinhado à esquerda do container */
+  background: transparent;     /* Fundo transparente para não atrapalhar visual */
+  z-index: 10;                 /* Para ficar acima de outros elementos */
+}
+
+/* Mostra o dropdown quando ativado */
+.dropdown-cardapio.show {
+  display: block;
+}
+
+/* Botões dentro do dropdown do cardápio */
+.dropdown-cardapio button {
+  background-color: #e50914;  /* Mesma cor vermelha do botão principal */
+  color: white;               /* Texto branco */
+  border: none;               /* Sem borda */
+  border-radius: 6px;         /* Bordas arredondadas */
+  padding: 10px 15px;         /* Espaçamento interno para facilitar clique */
+  margin-bottom: 10px;        /* Espaçamento entre os botões */
+  cursor: pointer;            /* Cursor clicável */
+  font-size: 14px;            /* Fonte um pouco menor */
+  transition: background 0.3s; /* Transição suave na mudança de cor */
+}
+
+/* Efeito hover nos botões do dropdown do cardápio */
+.dropdown-cardapio button:hover {
+  background-color: #b20710;  /* Vermelho mais escuro ao passar o mouse */
+}
+
+/* ===================== Nomes dos objetos exibidos ao lado dos botões ===================== */
+.itens-container {
+  position: absolute;         /* Posiciona o container no lugar fixo */
+  top: 90px;                 /* Alinhado 20px do topo */
+  left: 160px;               /* Posicionado 160px da esquerda para ficar ao lado dos botões */
+  display: flex;             /* Usa flexbox para alinhar os itens */
+  flex-wrap: wrap;           /* Permite quebra de linha automática para os itens */
+  gap: 10px;                 /* Espaço de 10px entre as caixas */
+  max-width: calc(100% - 180px); /* Limita a largura máxima para não ultrapassar a tela, considerando os 180px dos botões + margem */
+}
+
+/* Caixa individual que contém o nome de cada item do cardápio */
+.item-box {
+  background-color: #c8c3c3;         /* Fundo cinza claro para destacar */
+  padding: 8px 12px;                 /* Espaçamento interno confortável */
+  border-radius: 6px;                /* Bordas arredondadas */
+  font-size: 14px;                   /* Fonte legível, tamanho médio */
+  color: #333;                       /* Cor do texto cinza escuro */
+  
+  /* ==== Animação adicionada ==== */
+  opacity: 0;                        /* Começa invisível */
+  animation: fadeSlideUp 0.4s ease forwards; /* Aplica a animação e mantém estado final */
+}
+
+/* Efeito hover nas caixas de item */
+.item-box:hover {
+  background-color: #c27f40;  /* Cor de fundo vermelha ao passar o mouse */
+  color: rgb(0, 0, 0);               /* Texto branco para contraste */
+  cursor: pointer;            /* Mostra que a caixa é interativa */
+  transition: background-color 0.2s ease, color 0.2s ease; /* Transição suave */
+}
+
+/* ===================== Animação para entrada dos itens ===================== */
+
+/* Define a animação que desliza o item de baixo para cima com fade */
+@keyframes fadeSlideUp {
+  0% {
+    opacity: 0;          /* Começa invisível */
+    transform: translateY(20px);  /* Começa deslocado 20px abaixo */
+  }
+  100% {
+    opacity: 1;          /* Fica visível */
+    transform: translateY(0);     /* Volta para posição original */
+  }
+}
+
