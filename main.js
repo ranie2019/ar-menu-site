@@ -1,46 +1,41 @@
+// ==============================
+// index (página inicial)
+// ==============================
 document.addEventListener('DOMContentLoaded', () => {
-
-  // ==============================
-  // 1. MODAL DE CADASTRO
-  // ==============================
-
   const abrirModal = document.getElementById("abrirModal");
   const fecharModal = document.getElementById("fecharModal");
   const modal = document.getElementById("modal");
 
-  // Abre e fecha o modal de login/cadastro
+  // Abrir/fechar modal de cadastro/login
   if (abrirModal && fecharModal && modal) {
-    abrirModal.addEventListener("click", () => {
-      modal.classList.remove("hidden");
-    });
+    abrirModal.addEventListener("click", () => modal.classList.remove("hidden"));
+    fecharModal.addEventListener("click", () => modal.classList.add("hidden"));
 
-    fecharModal.addEventListener("click", () => {
-      modal.classList.add("hidden");
-    });
-
-    // Fecha modal ao clicar fora da caixa de conteúdo
+    // Fecha modal clicando fora da área de conteúdo
     window.addEventListener("click", (e) => {
-      if (e.target === modal) {
-        modal.classList.add("hidden");
-      }
+      if (e.target === modal) modal.classList.add("hidden");
     });
   }
+});
 
-  // ==============================
-  // 2. VALIDAÇÃO DE SENHA
-  // ==============================
-
+// ==============================
+// cadastro (validação, formatação, envio)
+// ==============================
+document.addEventListener('DOMContentLoaded', () => {
   const senhaInput = document.getElementById("senha");
   const confirmarSenhaInput = document.getElementById("confirmarSenha");
+  const formCadastro = document.getElementById('formCadastro');
+  const mensagemErro = document.getElementById('mensagemErro');
+  const cnpjInput = document.getElementById('cnpj');
+  const telefoneInput = document.getElementById('telefone');
 
-  // Verifica se as senhas digitadas coincidem
+  // Valida se as senhas coincidem
   function validarSenhas() {
-    if (senhaInput && confirmarSenhaInput) {
-      if (senhaInput.value !== confirmarSenhaInput.value) {
-        confirmarSenhaInput.setCustomValidity("As senhas não coincidem.");
-      } else {
-        confirmarSenhaInput.setCustomValidity("");
-      }
+    if (!senhaInput || !confirmarSenhaInput) return;
+    if (senhaInput.value !== confirmarSenhaInput.value) {
+      confirmarSenhaInput.setCustomValidity("As senhas não coincidem.");
+    } else {
+      confirmarSenhaInput.setCustomValidity("");
     }
   }
 
@@ -49,91 +44,85 @@ document.addEventListener('DOMContentLoaded', () => {
     confirmarSenhaInput.addEventListener("input", validarSenhas);
   }
 
-  // ==============================
-  // 3. ENVIO DO FORMULÁRIO
-  // ==============================
-
-  const formCadastro = document.getElementById('formCadastro');
-  const mensagemErro = document.getElementById('mensagemErro');
-
-  // Impede o envio se as senhas forem diferentes
+  // Controle do envio do formulário: bloqueia se senhas divergentes
   if (formCadastro && senhaInput && confirmarSenhaInput) {
-    formCadastro.addEventListener('submit', function (event) {
+    formCadastro.addEventListener('submit', (event) => {
       if (senhaInput.value !== confirmarSenhaInput.value) {
-        event.preventDefault(); // Bloqueia envio do formulário
-        if (mensagemErro) {
-          mensagemErro.style.display = 'block';
-        }
+        event.preventDefault();
+        if (mensagemErro) mensagemErro.style.display = 'block';
         senhaInput.value = '';
         confirmarSenhaInput.value = '';
       } else {
-        if (mensagemErro) {
-          mensagemErro.style.display = 'none';
-        }
+        if (mensagemErro) mensagemErro.style.display = 'none';
       }
     });
   }
 
-  // ==============================
-  // 4. FORMATAÇÃO DE CNPJ
-  // ==============================
-
-  const cnpjInput = document.getElementById('cnpj');
-
-  // Aplica máscara no campo de CNPJ em tempo real
+  // Máscara para CNPJ em tempo real
   if (cnpjInput) {
     cnpjInput.addEventListener('input', function () {
       this.value = this.value
-        .replace(/\D/g, '')                             // Remove tudo que não for número
-        .replace(/^(\d{2})(\d)/, '$1.$2')               // Coloca ponto depois dos 2 primeiros dígitos
-        .replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3')   // Segundo ponto
-        .replace(/\.(\d{3})(\d)/, '.$1/$2')             // Barra
-        .replace(/(\d{4})(\d)/, '$1-$2')                // Hífen
-        .slice(0, 18);                                  // Limita tamanho
+        .replace(/\D/g, '')
+        .replace(/^(\d{2})(\d)/, '$1.$2')
+        .replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3')
+        .replace(/\.(\d{3})(\d)/, '.$1/$2')
+        .replace(/(\d{4})(\d)/, '$1-$2')
+        .slice(0, 18);
     });
   }
 
-  // ==============================
-  // 5. FORMATAÇÃO DE TELEFONE
-  // ==============================
-
-  const telefoneInput = document.getElementById('telefone');
-
-  // Aplica máscara de telefone no formato (XX) XXXXX-XXXX
+  // Máscara para telefone (formato: (XX) XXXXX-XXXX)
   if (telefoneInput) {
     telefoneInput.addEventListener('input', function () {
       this.value = this.value
-        .replace(/\D/g, '')                            // Remove caracteres não numéricos
-        .replace(/^(\d{2})(\d)/, '($1) $2')            // Adiciona parênteses nos dois primeiros
-        .replace(/(\d{5})(\d)/, '$1-$2')               // Adiciona hífen depois de 5 dígitos
-        .slice(0, 15);                                 // Limita a 15 caracteres
-    });
-  }
-
-  // ==============================
-  // 6. MENU DE PERFIL (HOME)
-  // ==============================
-
-  const profileBtn = document.getElementById('profile-btn');
-  const dropdown = document.getElementById('dropdown');
-
-  // Alterna o dropdown ao clicar no botão de perfil
-  if (profileBtn && dropdown) {
-    profileBtn.addEventListener('click', function (e) {
-      e.stopPropagation(); // Evita fechar ao clicar no próprio botão
-      dropdown.classList.toggle('show');
-    });
-
-    // Fecha dropdown se clicar fora dele
-    document.addEventListener('click', function (e) {
-      if (!dropdown.contains(e.target)) {
-        dropdown.classList.remove('show');
-      }
+        .replace(/\D/g, '')
+        .replace(/^(\d{2})(\d)/, '($1) $2')
+        .replace(/(\d{5})(\d)/, '$1-$2')
+        .slice(0, 15);
     });
   }
 });
 
-// ============================== CARDÁPIO - Objetos 3D por categoria ==============================
+// ==============================
+// home (menu perfil e cardápio)
+// ==============================
+document.addEventListener('DOMContentLoaded', () => {
+  const profileBtn = document.getElementById('profile-btn');
+  const dropdown = document.getElementById('dropdown');
+  const cardapioBtn = document.getElementById('cardapio-btn');
+  const dropdownCardapio = document.getElementById('dropdownCardapio');
+
+  // Perfil: redireciona para perfil.html (desativa dropdown)
+  if (profileBtn) {
+    profileBtn.addEventListener('click', () => {
+      window.location.href = 'perfil.html';
+    });
+  }
+
+  // Cardápio: alterna visibilidade do dropdown
+  if (cardapioBtn && dropdownCardapio) {
+    cardapioBtn.addEventListener('click', () => {
+      dropdownCardapio.classList.toggle('show');
+    });
+  }
+
+  // Fecha dropdown de cardápio ao clicar fora
+  document.addEventListener('click', (e) => {
+    if (dropdownCardapio && !dropdownCardapio.contains(e.target) && cardapioBtn !== e.target) {
+      dropdownCardapio.classList.remove('show');
+    }
+  });
+});
+
+// ==============================
+// planos (exemplo para futuras funções)
+// ==============================
+// Você pode inserir aqui scripts específicos para a página planos.html
+// Por exemplo, controle de seleção de planos, envio, etc.
+
+// ==============================
+// CARDÁPIO - objetos 3D e controle de exibição
+// ==============================
 const objetos3D = {
   bebidas: ['Heineken', 'Redbull', 'Coca-Cola', 'Suco'],
   pizzas: ['Pizza Calabresa', 'Pizza Marguerita', 'Pizza 4 Queijos'],
@@ -142,42 +131,27 @@ const objetos3D = {
   porcoes: ['Batata Frita', 'Nuggets', 'Anéis de Cebola']
 };
 
-// Controla qual categoria está ativa (exibida)
 let categoriaAtiva = null;
 
-// ============================== Evento para alternar menu "Perfil" ==============================
-document.getElementById('profile-btn').addEventListener('click', function () {
-  document.getElementById('dropdown').classList.toggle('show');
-});
-
-// ============================== Evento para alternar menu "Cardápio" ==============================
-document.getElementById('cardapio-btn').addEventListener('click', function () {
-  document.getElementById('dropdownCardapio').classList.toggle('show');
-});
-
-// ============================== Função para mostrar itens da categoria selecionada ==============================
+// Função para mostrar/ocultar itens da categoria clicada
 function mostrarItens(categoria) {
-  const container = document.getElementById('itensContainer'); // Seleciona o container onde os itens serão exibidos
+  const container = document.getElementById('itensContainer');
+  if (!container || !objetos3D[categoria]) return;
 
-  // Se clicar na mesma categoria que já está ativa, limpa e esconde os itens
   if (categoriaAtiva === categoria) {
-    container.innerHTML = '';   // Remove os itens exibidos
-    categoriaAtiva = null;      // Reseta o estado de categoria ativa
-    return;                     // Encerra a função
+    container.innerHTML = '';
+    categoriaAtiva = null;
+    return;
   }
 
-  categoriaAtiva = categoria;   // Define nova categoria ativa
-  container.innerHTML = '';     // Limpa os itens anteriores
+  categoriaAtiva = categoria;
+  container.innerHTML = '';
 
-  // Para cada item da categoria, cria uma caixa com animação
-  objetos3D[categoria].forEach((nome, index) => {
-    const box = document.createElement('div');   // Cria uma nova div para o item
-    box.className = 'item-box';                  // Aplica a classe com estilo e animação
-    box.textContent = nome;                      // Define o texto da caixa como o nome do item
-
-    // Aplica um pequeno atraso na animação para efeito cascata
-    box.style.animationDelay = `${index * 0.1}s`;
-
-    container.appendChild(box);                  // Adiciona a caixa ao container
+  objetos3D[categoria].forEach((nome, i) => {
+    const box = document.createElement('div');
+    box.className = 'item-box';
+    box.textContent = nome;
+    box.style.animationDelay = `${i * 0.1}s`;
+    container.appendChild(box);
   });
 }
