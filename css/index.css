@@ -1,7 +1,3 @@
-/* =====================
-   INDEX
-===================== */
-
 /* Estilo geral da página index */
 body {
   background-color: #fff;
@@ -161,5 +157,3 @@ header .titulo {
   font-size: 20px;
   cursor: pointer;
 }
-
-
