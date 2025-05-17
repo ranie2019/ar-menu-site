@@ -7,64 +7,88 @@ document.addEventListener('DOMContentLoaded', () => {
   const dropdown = document.getElementById('dropdown');
   const cardapioBtn = document.getElementById('cardapio-btn');
   const dropdownCardapio = document.getElementById('dropdownCardapio');
+  const container = document.getElementById('itensContainer');
 
-  // Alterna o menu "Perfil"
-  if (profileBtn && dropdown) {
+  // Redireciona ao clicar no botão "Perfil"
+  if (profileBtn) {
     profileBtn.addEventListener('click', () => {
-      dropdown.classList.toggle('show');
+      window.location.href = 'perfil.html';
     });
   }
 
-  // Alterna o menu "Cardápio"
+  // Botão "Cardápio" abre/fecha dropdown e limpa itens e preview
   if (cardapioBtn && dropdownCardapio) {
     cardapioBtn.addEventListener('click', () => {
       dropdownCardapio.classList.toggle('show');
+      dropdown.classList.remove('show');
 
-      // Se o menu foi fechado, limpa os itens exibidos
-      const container = document.getElementById('itensContainer');
-      if (!dropdownCardapio.classList.contains('show') && container) {
-        container.innerHTML = '';
-        categoriaAtiva = null;
-      }
+      // Oculta o container dos nomes e limpa o conteúdo
+      container.style.display = 'none';
+      container.innerHTML = '';
+      categoriaAtiva = null;
+
+      // Esconde o preview 3D
+      modelModal.style.display = 'none';
+      modelModal.innerHTML = '';
     });
   }
+
+  // Evento de hover nos botões das categorias do cardápio
+  document.querySelectorAll('#dropdownCardapio button').forEach(btn => {
+    btn.addEventListener('mouseenter', () => {
+      const categoria = btn.getAttribute('data-categoria');
+      mostrarItens(categoria); // Mostra os nomes ao passar o mouse
+    });
+  });
+
+  // Clicar fora dos menus → fecha tudo
+  document.addEventListener('click', (event) => {
+    if (!event.target.closest('.profile-menu')) dropdown.classList.remove('show');
+
+    if (!event.target.closest('.cardapio-menu')) {
+      dropdownCardapio.classList.remove('show');
+      container.style.display = 'none'; // <-- Adicionado aqui também
+      container.innerHTML = ''; 
+      categoriaAtiva = null;
+      modelModal.style.display = 'none';
+      modelModal.innerHTML = '';
+    }
+  });
 });
 
 // ==============================
 // CARDÁPIO - CONTROLE DE ITENS
 // ==============================
-let categoriaAtiva = null;
+
+let categoriaAtiva = null; // Guarda a categoria atualmente ativa
 
 function mostrarItens(categoria) {
   const container = document.getElementById('itensContainer');
   if (!container || !objetos3D[categoria]) return;
 
-  if (categoriaAtiva === categoria) {
-    container.innerHTML = '';
-    categoriaAtiva = null;
-    return;
-  }
+  if (categoriaAtiva === categoria) return;
 
   categoriaAtiva = categoria;
   container.innerHTML = '';
+  container.style.display = 'flex'; // Mostra os itens
 
   objetos3D[categoria].forEach((nome, i) => {
     const box = document.createElement('div');
     box.className = 'item-box';
     box.textContent = nome;
+    box.setAttribute('data-categoria', categoria);
     box.style.animationDelay = `${i * 0.1}s`;
     container.appendChild(box);
   });
 
-  // Atualiza os eventos de hover para preview 3D após criar os itens
   adicionarPreview3D();
 }
 
 // ==============================
 // PREVIEW 3D NO HOVER
 // ==============================
-const MODEL_BASE_URL = 'https://ar-menu-models.s3.amazonaws.com/';
 
+const MODEL_BASE_URL = 'https://ar-menu-models.s3.amazonaws.com/';
 const modelModal = document.createElement('div');
 modelModal.className = 'model-preview-modal';
 modelModal.style.display = 'none';
@@ -77,7 +101,9 @@ function nomeParaArquivo(nome) {
 function adicionarPreview3D() {
   document.querySelectorAll('.item-box').forEach(item => {
     const nomeObjeto = item.textContent.trim();
+    const categoria = item.getAttribute('data-categoria');
     const nomeArquivo = nomeParaArquivo(nomeObjeto);
+    const modelURL = `${MODEL_BASE_URL}${categoria}/${nomeArquivo}`;
 
     item.addEventListener('mouseenter', () => {
       const rect = item.getBoundingClientRect();
@@ -88,7 +114,7 @@ function adicionarPreview3D() {
       modelModal.innerHTML = `
         <a-scene embedded vr-mode-ui="enabled: false" style="width: 300px; height: 200px;">
           <a-entity position="0 0 -3">
-            <a-gltf-model src="${MODEL_BASE_URL}${nomeArquivo}" scale="0.5 0.5 0.5"></a-gltf-model>
+            <a-gltf-model src="${modelURL}" scale="0.5 0.5 0.5"></a-gltf-model>
           </a-entity>
           <a-light type="ambient" intensity="1.2"></a-light>
           <a-camera position="0 0 0"></a-camera>

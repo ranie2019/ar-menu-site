@@ -4,44 +4,65 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Home - Sistema</title>
+  
+  <!-- Importa o CSS específico da página home -->
   <link rel="stylesheet" href="../css/home.css" />
 </head>
 <body>
 
-  <!-- Cabeçalho branco com título centralizado -->
+  <!-- ============================================== -->
+  <!-- CABEÇALHO: Título centralizado e botão de perfil -->
+  <!-- ============================================== -->
   <header class="header">
     <h1 class="titulo">Bem-vindo(a) ao Sistema</h1>
 
-    <!-- Botão de perfil com menu suspenso -->
+    <!-- Botão de perfil que redireciona para perfil.html -->
     <div class="profile-menu">
-      <button id="profile-btn">Perfil &#9662;</button>
-      <div id="dropdown" class="dropdown-content">
-        <a href="#">Meu perfil</a>
-        <a href="#">Opções</a>
-        <a href="#">Sair</a>
-      </div>
+      <button id="profile-btn">Perfil</button>
     </div>
   </header>
 
-  <!-- Menu de Cardápio com botões em cascata -->
+  <!-- =================================================== -->
+  <!-- MENU DE CARDÁPIO: Botão + opções de categorias -->
+  <!-- =================================================== -->
   <div class="cardapio-menu">
+    <!-- Botão principal para abrir o dropdown do cardápio -->
     <button id="cardapio-btn">Cardápio</button>
 
-    <!-- Botões de seleção de categoria -->
+    <!-- Opções de categorias disponíveis no cardápio -->
     <div id="dropdownCardapio" class="dropdown-cardapio">
-      <button onclick="mostrarItens('bebidas')">Bebidas</button>
-      <button onclick="mostrarItens('pizzas')">Pizzas</button>
-      <button onclick="mostrarItens('lanches')">Lanches</button>
-      <button onclick="mostrarItens('sobremesas')">Sobremesas</button>
-      <button onclick="mostrarItens('porcoes')">Porções</button>
+      <button data-categoria="bebidas">Bebidas</button>
+      <button data-categoria="pizzas">Pizzas</button>
+      <button data-categoria="lanches">Lanches</button>
+      <button data-categoria="sobremesas">Sobremesas</button>
+      <button data-categoria="porcoes">Porções</button>
+      
     </div>
   </div>
 
-  <!-- Área onde serão exibidos os nomes dos objetos -->
+  <!-- =================================================== -->
+  <!-- CONTAINER DE ITENS: Onde os produtos são listados -->
+  <!-- =================================================== -->
   <div id="itensContainer" class="itens-container"></div>
 
-  <!-- Script -->
-  <script src="cardapio.js"></script>
-  <script src="main.js"></script>
+  <!-- =================================================== -->
+  <!-- SCRIPTS JAVASCRIPT DA PÁGINA                        -->
+  <!-- home.js: menus e preview 3D                        -->
+  <!-- cardapio.js: lista dos objetos 3D por categoria    -->
+  <!-- =================================================== -->
+  <script>
+    // Redireciona ao clicar no botão "Perfil"
+    document.addEventListener('DOMContentLoaded', () => {
+      const profileBtn = document.getElementById('profile-btn');
+      if (profileBtn) {
+        profileBtn.addEventListener('click', () => {
+          window.location.href = 'perfil.html';
+        });
+      }
+    });
+  </script>
+  <script src="../java/home.js"></script>
+  <script src="../java/cardapio.js"></script>
+
 </body>
 </html>
