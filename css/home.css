@@ -178,7 +178,7 @@ body {
 
 /* Efeito hover nas caixas de item */
 .item-box:hover {
-  background-color: #c27f40;  /* Cor de fundo vermelha ao passar o mouse */
+  background-color: #d4d4d4;  /* Cor de fundo vermelha ao passar o mouse */
   color: rgb(0, 0, 0);               /* Texto branco para contraste */
   cursor: pointer;            /* Mostra que a caixa é interativa */
   transition: background-color 0.2s ease, color 0.2s ease; /* Transição suave */
@@ -266,3 +266,23 @@ body {
   z-index: 9999;
   overflow: hidden;
 }
+
+/* Botão ATIVADO */
+#dropdownCardapio button {
+  background-color: red;
+  color: white;
+  font-weight: bold;
+  margin-bottom: 8px;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+/* Botão DESATIVADO */
+#dropdownCardapio button.desativado {
+  background-color: lightgray;
+  color: #333;
+}
+
+
