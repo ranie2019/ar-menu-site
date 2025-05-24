@@ -163,26 +163,43 @@ body {
   max-width: calc(100% - 180px); /* Limita a largura máxima para não ultrapassar a tela, considerando os 180px dos botões + margem */
 }
 
-/* Caixa individual que contém o nome de cada item do cardápio */
-.item-box {
-  background-color: #c8c3c3;         /* Fundo cinza claro para destacar */
-  padding: 8px 12px;                 /* Espaçamento interno confortável */
-  border-radius: 6px;                /* Bordas arredondadas */
-  font-size: 14px;                   /* Fonte legível, tamanho médio */
-  color: #333;                       /* Cor do texto cinza escuro */
-  
-  /* ==== Animação adicionada ==== */
-  opacity: 0;                        /* Começa invisível */
-  animation: fadeSlideUp 0.4s ease forwards; /* Aplica a animação e mantém estado final */
+/* ===================== Nomes dos objetos exibidos ao lado dos botões ===================== */
+.itens-container {
+  position: absolute;                 /* Posiciona o container de forma fixa na tela */
+  top: 90px;                          /* Distância do topo da tela */
+  left: 160px;                        /* Distância da lateral esquerda (ao lado dos botões) */
+  display: flex;                      /* Layout flexível para organizar as caixas */
+  flex-wrap: wrap;                    /* Permite que os itens quebrem linha automaticamente */
+  gap: 10px;                          /* Espaçamento entre as caixas */
+  max-width: calc(100% - 180px);      /* Garante que o container não ultrapasse a tela */
 }
 
-/* Efeito hover nas caixas de item */
-.item-box:hover {
-  background-color: #d4d4d4;  /* Cor de fundo vermelha ao passar o mouse */
-  color: rgb(0, 0, 0);               /* Texto branco para contraste */
-  cursor: pointer;            /* Mostra que a caixa é interativa */
-  transition: background-color 0.2s ease, color 0.2s ease; /* Transição suave */
+/* ===================== Caixa individual com o nome de cada item do cardápio ===================== */
+.item-box {
+  background-color: #deab4d;          /* Cor de fundo harmoniosa com tons quentes */
+  padding: 8px 12px;                  /* Espaçamento interno da caixa */
+  border-radius: 6px;                 /* Bordas levemente arredondadas */
+  font-size: 14px;                    /* Tamanho de texto confortável */
+  color: #000000;                     /* Cor do texto preta para boa leitura */
+  opacity: 0;                         /* Começa invisível para animação */
+  animation: fadeSlideUp 0.4s ease forwards; /* Animação suave ao aparecer */
+  transition: background-color 0.2s ease, color 0.2s ease; /* Transição suave para interações */
 }
+
+/* ===================== Estado DESATIVADO da caixa ===================== */
+.item-box.inactive {
+  background-color: #666363 !important; /* Cinza bem claro para indicar desativado */
+  color: #ff0000 !important;            /* Vermelho queimado mais apagado */
+  pointer-events: none;                 /* Desativa qualquer clique/hover */
+}
+
+/* ===================== Hover ativo apenas se NÃO estiver desativado ===================== */
+.item-box:not(.inactive):hover {
+  background-color: #d5be92;           /* Cor de destaque ao passar o mouse */
+  color: #000000;                      /* Cor do texto ao passar o mouse */
+  cursor: pointer;                     /* Cursor de interação */
+}
+
 
 /* ===================== Animação para entrada dos itens ===================== */
 
@@ -267,7 +284,9 @@ body {
   overflow: hidden;
 }
 
-/* Botão ATIVADO */
+/* ===================== BOTÕES DO DROPDOWN DE CARDÁPIO ===================== */
+
+/* Estado ATIVADO (botão destacado em vermelho) */
 #dropdownCardapio button {
   background-color: red;
   color: white;
@@ -279,10 +298,77 @@ body {
   border-radius: 4px;
 }
 
-/* Botão DESATIVADO */
+/* Estado DESATIVADO (botão apagado) */
 #dropdownCardapio button.desativado {
-  background-color: lightgray;
-  color: #333;
+  background-color: rgb(196, 192, 192);
+  color: #747272;
 }
 
+/* ===================== Adicionar Garçons ===================== */
+.garcons-section {
+  margin: 20px;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+}
+
+.garcons-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.garcom-bloco {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.garcom-id {
+  font-weight: bold;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.modal-content .close {
+  float: right;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+#quantidadeGarcons {
+  width: 40px;
+  text-align: center;
+}
+
+/* Remove as setas do input type="number" em todos os navegadores */
+#quantidadeGarcons::-webkit-inner-spin-button,
+#quantidadeGarcons::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+#quantidadeGarcons {
+  -moz-appearance: textfield; /* Firefox */
+  appearance: textfield;
+}
 
