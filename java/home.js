@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const dropdownCardapio = document.getElementById('dropdownCardapio');
   const container = document.getElementById('itensContainer');
 
-  let categoriaAtiva = null; // Guarda a categoria atualmente ativa
+  let categoriaAtiva = null;
 
   // ==============================
   // PERFIL - Redirecionamento
@@ -24,10 +24,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==============================
   if (cardapioBtn && dropdownCardapio) {
     cardapioBtn.addEventListener('click', () => {
-      // Alterna visibilidade do menu dropdown
       dropdownCardapio.classList.toggle('show');
 
-      // Ao fechar o dropdown, limpa o container e modal
       if (!dropdownCardapio.classList.contains('show')) {
         container.style.display = 'none';
         container.innerHTML = '';
@@ -35,7 +33,6 @@ document.addEventListener('DOMContentLoaded', () => {
         modelModal.style.display = 'none';
         modelModal.innerHTML = '';
       }
-      // Não altera os estados dos botões para preservar a configuração do usuário
     });
   }
 
@@ -44,27 +41,19 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==============================
   document.querySelectorAll('#dropdownCardapio button').forEach(btn => {
     const categoria = btn.getAttribute('data-categoria');
-    const id = 'btnEstado_' + categoria;  // id para salvar estado no localStorage
+    const id = 'btnEstado_' + categoria;
 
-    // Recupera o estado salvo e aplica
-    const estaDesativado = localStorage.getItem(id) === 'true'; // true = desativado
-
+    const estaDesativado = localStorage.getItem(id) === 'true';
     if (estaDesativado) {
       btn.classList.add('desativado');
-    } else {
-      btn.classList.remove('desativado');
     }
 
     btn.addEventListener('click', () => {
-      const desativadoAgora = !btn.classList.contains('desativado'); // será invertido com toggle
-
+      const desativadoAgora = !btn.classList.contains('desativado');
       btn.classList.toggle('desativado');
-
-      // Salva o novo estado (true = desativado)
       localStorage.setItem(id, desativadoAgora);
 
       if (desativadoAgora) {
-        // Botão DESATIVADO agora (antes estava ativado)
         if (categoriaAtiva === categoria) {
           categoriaAtiva = null;
           container.innerHTML = '';
@@ -73,7 +62,6 @@ document.addEventListener('DOMContentLoaded', () => {
           modelModal.innerHTML = '';
         }
       } else {
-        // Botão ATIVADO agora (antes estava desativado)
         categoriaAtiva = categoria;
         mostrarItens(categoria);
         container.style.display = 'flex';
@@ -90,12 +78,12 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==============================
   // CARDÁPIO - CONTROLE DE ITENS
   // ==============================
+
   function mostrarItens(categoria) {
+    const container = document.getElementById('itensContainer');
+
     if (!container || !objetos3D[categoria]) return;
 
-    if (categoriaAtiva === categoria) return;
-
-    categoriaAtiva = categoria;
     container.innerHTML = '';
     container.style.display = 'flex';
 
@@ -105,15 +93,30 @@ document.addEventListener('DOMContentLoaded', () => {
       box.textContent = nome;
       box.setAttribute('data-categoria', categoria);
       box.style.animationDelay = `${i * 0.1}s`;
+
+      const idItem = `itemEstado_${categoria}_${nome}`;
+      const estaDesativado = localStorage.getItem(idItem) === 'true';
+      if (estaDesativado) {
+        box.classList.add('desativado');
+      }
+
+      // Toggle ativo/desativado ao clicar
+      box.addEventListener('click', () => {
+        box.classList.toggle('desativado');
+        const desativadoAgora = box.classList.contains('desativado');
+        localStorage.setItem(idItem, desativadoAgora.toString());
+      });
+
       container.appendChild(box);
     });
 
-    adicionarPreview3D();
+    adicionarPreview3D(); // mantém funcionalidade do preview
   }
 
   // ==============================
   // PREVIEW 3D - HOVER NOS ITENS
   // ==============================
+
   const MODEL_BASE_URL = 'https://ar-menu-models.s3.amazonaws.com/';
   const modelModal = document.createElement('div');
   modelModal.className = 'model-preview-modal';
@@ -132,6 +135,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const modelURL = `${MODEL_BASE_URL}${categoria}/${nomeArquivo}`;
 
       item.addEventListener('mouseenter', () => {
+        // Não mostra preview se o item estiver desativado
+        if (item.classList.contains('desativado')) return;
+
         const rect = item.getBoundingClientRect();
         modelModal.style.left = `${rect.right + 10}px`;
         modelModal.style.top = `${rect.top}px`;

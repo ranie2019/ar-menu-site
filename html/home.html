@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Home - Sistema</title>
-  
+
   <!-- Importa o CSS específico da página home -->
   <link rel="stylesheet" href="../css/home.css" />
 </head>
@@ -36,7 +36,6 @@
       <button data-categoria="lanches">Lanches</button>
       <button data-categoria="sobremesas">Sobremesas</button>
       <button data-categoria="porcoes">Porções</button>
-      
     </div>
   </div>
 
@@ -59,8 +58,17 @@
           window.location.href = 'perfil.html';
         });
       }
+
+      // Adiciona lógica de ativar/desativar item
+      document.addEventListener('click', (e) => {
+        const itemBox = e.target.closest('.item');
+        if (itemBox) {
+          itemBox.classList.toggle('desativado');
+        }
+      });
     });
   </script>
+
   <script src="../java/home.js"></script>
   <script src="../java/cardapio.js"></script>
 

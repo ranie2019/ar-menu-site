@@ -155,7 +155,7 @@ body {
 /* ===================== Nomes dos objetos exibidos ao lado dos botões ===================== */
 .itens-container {
   position: absolute;         /* Posiciona o container no lugar fixo */
-  top: 90px;                 /* Alinhado 20px do topo */
+  top: 90px;                 /* Alinhado 90px do topo */
   left: 160px;               /* Posicionado 160px da esquerda para ficar ao lado dos botões */
   display: flex;             /* Usa flexbox para alinhar os itens */
   flex-wrap: wrap;           /* Permite quebra de linha automática para os itens */
@@ -165,11 +165,11 @@ body {
 
 /* Caixa individual que contém o nome de cada item do cardápio */
 .item-box {
-  background-color: #c8c3c3;         /* Fundo cinza claro para destacar */
+  background-color: #ffb342;         /* Fundo cinza claro para destacar */
   padding: 8px 12px;                 /* Espaçamento interno confortável */
   border-radius: 6px;                /* Bordas arredondadas */
   font-size: 14px;                   /* Fonte legível, tamanho médio */
-  color: #333;                       /* Cor do texto cinza escuro */
+  color: #000000;                       /* Cor do texto cinza escuro */
   
   /* ==== Animação adicionada ==== */
   opacity: 0;                        /* Começa invisível */
@@ -178,7 +178,7 @@ body {
 
 /* Efeito hover nas caixas de item */
 .item-box:hover {
-  background-color: #d4d4d4;  /* Cor de fundo vermelha ao passar o mouse */
+  background-color: #fa951a;  /* Cor de fundo vermelha ao passar o mouse */
   color: rgb(0, 0, 0);               /* Texto branco para contraste */
   cursor: pointer;            /* Mostra que a caixa é interativa */
   transition: background-color 0.2s ease, color 0.2s ease; /* Transição suave */
@@ -195,6 +195,39 @@ body {
   100% {
     opacity: 1;          /* Fica visível */
     transform: translateY(0);     /* Volta para posição original */
+  }
+}
+
+/* Aplica a animação nos itens do cardápio */
+.itens-container .item {
+  animation: fadeSlideUp 0.6s ease-out;
+  animation-fill-mode: both;
+  opacity: 0; /* Garante que a animação inicie corretamente */
+  animation-delay: calc(var(--i, 0) * 0.1s); /* Permite delays variados se usar --i */
+}
+
+/* Responsividade para telas pequenas */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    padding: 10px 20px;
+  }
+
+  .titulo {
+    font-size: 24px;
+    margin-top: 10px;
+  }
+
+  .cardapio-menu {
+    top: 10px;
+    left: 10px;
+  }
+
+  .itens-container {
+    top: 100px;
+    left: 10px;
+    max-width: calc(100% - 20px);
+    justify-content: center;
   }
 }
 
@@ -247,9 +280,9 @@ body {
   top: 100%;
   left: 0;
   z-index: 1000;
-  background-color: #fff;
+  background-color: #ffffff;
   padding: 5px;
-  border: 1px solid #ccc;
+  border: 1px solid #ffffff;
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
@@ -260,7 +293,7 @@ body {
   width: 300px;
   height: 300px;
   background-color: white;
-  border: 2px solid #ccc;
+  border: 2px solid #ffffff;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
   z-index: 9999;
@@ -269,7 +302,7 @@ body {
 
 /* Botão ATIVADO */
 #dropdownCardapio button {
-  background-color: red;
+  background-color: rgb(255, 0, 0);
   color: white;
   font-weight: bold;
   margin-bottom: 8px;
@@ -283,4 +316,46 @@ body {
 #dropdownCardapio button.desativado {
   background-color: lightgray;
   color: #333;
+}
+
+/* ===================== ITENS DO CARDÁPIO ===================== */
+.item {
+  background-color: #ffffff;
+  border: 1px solid #ffffff;
+  padding: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: background 0.3s, opacity 0.3s;
+}
+
+/* Oculta a janela de informações do item ao desativar */
+.item.desativado {
+  background-color: #504e4e;
+  opacity: 0.5;
+}
+
+/* Janela que aparece dentro de cada item */
+.item .janela {
+  background: white;
+  border: 1px solid #ddd;
+  margin-top: 5px;
+  padding: 5px;
+}
+
+/* Esconde a janela se item estiver desativado */
+.item.desativado .janela {
+  display: none;
+}
+
+/* Estilo para item desativado */
+.item-box.desativado {
+  background-color: #ccc; /* fundo cinza */
+  pointer-events: auto; /* permite clicar de novo */
+  opacity: 0.5;
+}
+
+/* Quando desativado, não mostra tooltip nem cursor de interação */
+.item-box.desativado:hover .tooltip,
+.item-box.desativado:hover {
+  cursor: default;
 }
