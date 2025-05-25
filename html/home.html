@@ -62,21 +62,23 @@
     <div id="formularioGarcons"></div>
   </section>
 
-  <!-- Modal QR Code -->
-  <div id="modalQrCode" class="modal">
-    <div class="modal-content">
+  <!-- ============================== -->
+  <!-- MODAL QR CODE -->
+  <!-- ============================== -->
+  <div id="modalQrCode">
+    <div class="conteudo-modal">
       <span class="fechar-modal">&times;</span>
+      <h3>QR Code do Garçom</h3>
       <div id="qrcodeContainer"></div>
     </div>
   </div>
 
   <!-- =================================================== -->
   <!-- SCRIPTS JAVASCRIPT DA PÁGINA                        -->
-  <!-- home.js: menus e preview 3D                        -->
-  <!-- cardapio.js: lista dos objetos 3D por categoria    -->
   <!-- =================================================== -->
+
+  <!-- Redireciona para o perfil e ativa clique nos itens -->
   <script>
-    // Redireciona ao clicar no botão "Perfil"
     document.addEventListener('DOMContentLoaded', () => {
       const profileBtn = document.getElementById('profile-btn');
       if (profileBtn) {
@@ -93,9 +95,12 @@
         }
       });
     });
-    
   </script>
 
+  <!-- Biblioteca QRCode.js (obrigatória para gerar QR local) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <!-- Scripts da página (devem ser carregados após QRCode.js) -->
   <script src="../java/home.js"></script>
   <script src="../java/cardapio.js"></script>
 

@@ -163,162 +163,165 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ==============================
-// GARÇONS - Cadastro e QR Code
+// GARÇONS - Cadastro
 // ==============================
 
-const inputQuantidade = document.getElementById('quantidadeGarcons');
-const btnMais = document.getElementById('btnMaisGarcom');
-const btnMenos = document.getElementById('btnMenosGarcom');
-const containerFormularios = document.getElementById('formularioGarcons');
+function setupCadastroGarcons() {
+  const inputQuantidade = document.getElementById('quantidadeGarcons');
+  const btnMais = document.getElementById('btnMaisGarcom');
+  const btnMenos = document.getElementById('btnMenosGarcom');
+  const containerFormularios = document.getElementById('formularioGarcons');
 
-function formatarCelular(value) {
-  value = value.replace(/\D/g, '');
-  value = value.substring(0, 11);
-
-  if (value.length > 6) {
-    value = value.replace(/^(\d{2})(\d{5})(\d{0,4}).*/, '($1) $2-$3');
-  } else if (value.length > 2) {
-    value = value.replace(/^(\d{2})(\d{0,5})/, '($1) $2');
-  } else if (value.length > 0) {
-    value = value.replace(/^(\d{0,2})/, '($1');
+  function formatarCelular(value) {
+    value = value.replace(/\D/g, '');
+    value = value.substring(0, 11);
+    if (value.length > 6) {
+      value = value.replace(/^(\d{2})(\d{5})(\d{0,4}).*/, '($1) $2-$3');
+    } else if (value.length > 2) {
+      value = value.replace(/^(\d{2})(\d{0,5})/, '($1) $2');
+    } else if (value.length > 0) {
+      value = value.replace(/^(\d{0,2})/, '($1');
+    }
+    return value;
   }
 
-  return value;
-}
+  function adicionarEventoFormatacao(input) {
+    input.addEventListener('input', (e) => {
+      const posicaoCursor = input.selectionStart;
+      const valorAnterior = input.value;
+      input.value = formatarCelular(input.value);
+      const novaPosicaoCursor = posicaoCursor + (input.value.length - valorAnterior.length);
+      input.setSelectionRange(novaPosicaoCursor, novaPosicaoCursor);
+      const form = input.closest('.form-garcom');
+      const inputNome = form.querySelector('.nome-garcom');
+      if (input.value.trim() === '') {
+        inputNome.value = '';
+      }
+    });
+  }
 
-function adicionarEventoFormatacao(input) {
-  input.addEventListener('input', (e) => {
-    const posicaoCursor = input.selectionStart;
-    const valorAnterior = input.value;
-
-    input.value = formatarCelular(input.value);
-
-    // Ajuste simples para manter o cursor no lugar certo
-    const novaPosicaoCursor = posicaoCursor + (input.value.length - valorAnterior.length);
-    input.setSelectionRange(novaPosicaoCursor, novaPosicaoCursor);
-
-    // Atualiza o nome se telefone sumir
-    const form = input.closest('.form-garcom');
+  function validarCampos(form) {
     const inputNome = form.querySelector('.nome-garcom');
-
-    if (input.value.trim() === '') {
-      // Apaga nome só se telefone sumir
-      inputNome.value = '';
-    }
-  });
-}
-
-function validarCampos(form) {
-  const inputNome = form.querySelector('.nome-garcom');
-  const inputTel = form.querySelector('.tel-garcom');
-  const btnQr = form.querySelector('.btn-qr');
-
-  const nomeValido = inputNome.value.trim().length > 0;
-  const telValido = inputTel.value.trim().length >= 14; // mínimo para (XX) XXXXX-XXXX
-
-  btnQr.disabled = !(nomeValido && telValido);
-}
-
-function adicionarEventosValidacao(form) {
-  const inputNome = form.querySelector('.nome-garcom');
-  const inputTel = form.querySelector('.tel-garcom');
-
-  inputNome.addEventListener('input', () => validarCampos(form));
-  inputTel.addEventListener('input', () => {
-    validarCampos(form);
-
-    // Se telefone limpar, apaga nome
-    if (inputTel.value.trim() === '') {
-      inputNome.value = '';
-    }
-  });
-}
-
-function gerarFormulariosGarcons(qtd) {
-  // Guarda valores atuais para reaplicar depois
-  const dadosAtuais = {};
-  containerFormularios.querySelectorAll('.form-garcom').forEach(form => {
-    const id = form.querySelector('.nome-garcom').getAttribute('data-id');
-    dadosAtuais[id] = {
-      nome: form.querySelector('.nome-garcom').value,
-      tel: form.querySelector('.tel-garcom').value
-    };
-  });
-
-  containerFormularios.innerHTML = '';
-  for (let i = 1; i <= qtd; i++) {
-    const form = document.createElement('div');
-    form.className = 'form-garcom';
-
-    // Usa valores salvos se existirem
-    const nomeSalvo = dadosAtuais[i]?.nome || '';
-    const telSalvo = dadosAtuais[i]?.tel || '';
-
-    form.innerHTML = `
-      <label>Garçom ${i}:</label><br>
-      <input type="text" placeholder="Nome" class="nome-garcom" data-id="${i}" value="${nomeSalvo}">
-      <input type="tel" placeholder="Telefone" class="tel-garcom" data-id="${i}" maxlength="15" value="${telSalvo}">
-      <button class="btn-qr" data-id="${i}" disabled>Gerar QR Code</button>
-    `;
-
-    containerFormularios.appendChild(form);
-
-    // Adiciona evento de formatação ao input telefone recém criado
     const inputTel = form.querySelector('.tel-garcom');
-    adicionarEventoFormatacao(inputTel);
-
-    // Adiciona eventos para validação e habilitação do botão
-    adicionarEventosValidacao(form);
-
-    // Roda validação inicial para ativar botão se já tem valor preenchido
-    validarCampos(form);
+    const btnQr = form.querySelector('.btn-qr');
+    const nomeValido = inputNome.value.trim().length > 0;
+    const telValido = inputTel.value.trim().length >= 14;
+    btnQr.disabled = !(nomeValido && telValido);
   }
+
+  function adicionarEventosValidacao(form) {
+    const inputNome = form.querySelector('.nome-garcom');
+    const inputTel = form.querySelector('.tel-garcom');
+
+    inputNome.addEventListener('input', () => validarCampos(form));
+    inputTel.addEventListener('input', () => {
+      validarCampos(form);
+      if (inputTel.value.trim() === '') {
+        inputNome.value = '';
+      }
+    });
+  }
+
+  function gerarFormulariosGarcons(qtd) {
+    const dadosAtuais = {};
+    containerFormularios.querySelectorAll('.form-garcom').forEach(form => {
+      const id = form.querySelector('.nome-garcom').getAttribute('data-id');
+      dadosAtuais[id] = {
+        nome: form.querySelector('.nome-garcom').value,
+        tel: form.querySelector('.tel-garcom').value
+      };
+    });
+
+    containerFormularios.innerHTML = '';
+    for (let i = 1; i <= qtd; i++) {
+      const form = document.createElement('div');
+      form.className = 'form-garcom';
+      const nomeSalvo = dadosAtuais[i]?.nome || '';
+      const telSalvo = dadosAtuais[i]?.tel || '';
+      form.innerHTML = `
+        <label>Garçom ${i}:</label><br>
+        <input type="text" placeholder="Nome" class="nome-garcom" data-id="${i}" value="${nomeSalvo}">
+        <input type="tel" placeholder="Telefone" class="tel-garcom" data-id="${i}" maxlength="15" value="${telSalvo}">
+        <button class="btn-qr" data-id="${i}" disabled>Gerar QR Code</button>
+      `;
+      containerFormularios.appendChild(form);
+      const inputTel = form.querySelector('.tel-garcom');
+      adicionarEventoFormatacao(inputTel);
+      adicionarEventosValidacao(form);
+      validarCampos(form);
+    }
+  }
+
+  inputQuantidade.addEventListener('change', () => {
+    let val = parseInt(inputQuantidade.value);
+    if (val < 1) val = 1;
+    gerarFormulariosGarcons(val);
+  });
+
+  btnMais.addEventListener('click', () => {
+    inputQuantidade.value = parseInt(inputQuantidade.value) + 1;
+    inputQuantidade.dispatchEvent(new Event('change'));
+  });
+
+  btnMenos.addEventListener('click', () => {
+    inputQuantidade.value = Math.max(1, parseInt(inputQuantidade.value) - 1);
+    inputQuantidade.dispatchEvent(new Event('change'));
+  });
+
+  gerarFormulariosGarcons(1);
 }
 
-inputQuantidade.addEventListener('change', () => {
-  let val = parseInt(inputQuantidade.value);
-  if (val < 1) val = 1;
-  gerarFormulariosGarcons(val);
-});
+// ==============================
+// QR Code local (sem limite)
+// ==============================
 
-btnMais.addEventListener('click', () => {
-  inputQuantidade.value = parseInt(inputQuantidade.value) + 1;
-  inputQuantidade.dispatchEvent(new Event('change'));
-});
+function setupQrCodeGarcons() {
+  const modalQrCode = document.getElementById('modalQrCode');
+  const qrCodeContainer = document.getElementById('qrcodeContainer');
+  const btnFecharModal = modalQrCode.querySelector('.fechar-modal');
+  const containerFormularios = document.getElementById('formularioGarcons');
 
-btnMenos.addEventListener('click', () => {
-  inputQuantidade.value = Math.max(1, parseInt(inputQuantidade.value) - 1);
-  inputQuantidade.dispatchEvent(new Event('change'));
-});
+  containerFormularios.addEventListener('click', (e) => {
+    if (e.target.classList.contains('btn-qr') && !e.target.disabled) {
+      const id = e.target.getAttribute('data-id');
+      const nomeInput = document.querySelector(`.nome-garcom[data-id="${id}"]`);
+      const nome = nomeInput.value.trim() || `garcom${id}`;
 
-// Inicia com 1
-gerarFormulariosGarcons(1);
+      // URL final que o QR Code vai apontar
+      const urlPedido = `https://arcardapio.com.br/pedido.html?garcom=${encodeURIComponent(nome)}`;
 
-// Modal QR
-const modalQrCode = document.getElementById('modalQrCode');
-const qrCodeContainer = document.getElementById('qrcodeContainer');
-const btnFecharModal = modalQrCode.querySelector('.fechar-modal');
+      // Limpa conteúdo anterior
+      qrCodeContainer.innerHTML = '';
 
-// Gera QR com ID baseado no número do garçom
-containerFormularios.addEventListener('click', (e) => {
-  if (e.target.classList.contains('btn-qr') && !e.target.disabled) {
-    const id = e.target.getAttribute('data-id');
-    const nome = document.querySelector(`.nome-garcom[data-id="${id}"]`).value || 'garcom' + id;
-    const url = `https://arcardapio.com.br/pedido.html?garcom=${encodeURIComponent(nome)}`;
+      // Gera novo QR Code localmente (sem API externa)
+      new QRCode(qrCodeContainer, {
+        text: urlPedido,
+        width: 250,
+        height: 250,
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
+      });
 
-    qrCodeContainer.innerHTML = `<img src="https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl=${encodeURIComponent(url)}">`;
-    modalQrCode.style.display = 'block';
-  }
-});
+      // Mostra modal
+      modalQrCode.classList.add('ativo');
+    }
+  });
 
-btnFecharModal.addEventListener('click', () => {
-  modalQrCode.style.display = 'none';
-  qrCodeContainer.innerHTML = '';
-});
-
-window.addEventListener('click', (e) => {
-  if (e.target === modalQrCode) {
-    modalQrCode.style.display = 'none';
+  // Fechar modal
+  btnFecharModal.addEventListener('click', () => {
+    modalQrCode.classList.remove('ativo');
     qrCodeContainer.innerHTML = '';
-  }
-});
+  });
+
+  window.addEventListener('click', (e) => {
+    if (e.target === modalQrCode) {
+      modalQrCode.classList.remove('ativo');
+      qrCodeContainer.innerHTML = '';
+    }
+  });
+}
+
+// Chamada das funções
+setupCadastroGarcons();
+setupQrCodeGarcons();
