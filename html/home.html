@@ -21,7 +21,7 @@
       <button id="profile-btn">Perfil</button>
     </div>
   </header>
-
+  
   <!-- =================================================== -->
   <!-- MENU DE CARDÁPIO: Botão + opções de categorias -->
   <!-- =================================================== -->
@@ -43,6 +43,32 @@
   <!-- CONTAINER DE ITENS: Onde os produtos são listados -->
   <!-- =================================================== -->
   <div id="itensContainer" class="itens-container"></div>
+
+  <!-- ============================== -->
+  <!-- GARÇONS - Seção de Cadastro -->
+  <!-- ============================== -->
+  <section id="garconsSection">
+    <h2>Adicionar Garçons</h2>
+    <div id="controleGarcons">
+      <!-- Input numérico primeiro -->
+      <input type="number" id="quantidadeGarcons" value="1" min="1">
+
+      <!-- Botões lado a lado depois do input -->
+      <div id="botoesGarcons">
+        <button id="btnMaisGarcom">+</button>
+        <button id="btnMenosGarcom">-</button>
+      </div>
+    </div>
+    <div id="formularioGarcons"></div>
+  </section>
+
+  <!-- Modal QR Code -->
+  <div id="modalQrCode" class="modal">
+    <div class="modal-content">
+      <span class="fechar-modal">&times;</span>
+      <div id="qrcodeContainer"></div>
+    </div>
+  </div>
 
   <!-- =================================================== -->
   <!-- SCRIPTS JAVASCRIPT DA PÁGINA                        -->
@@ -67,6 +93,7 @@
         }
       });
     });
+    
   </script>
 
   <script src="../java/home.js"></script>
