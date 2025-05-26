@@ -474,12 +474,12 @@ body {
   text-align: center;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
   position: relative;
+  max-height: 80vh;
+  overflow-y: auto;
+  padding-right: 10px;
 }
 
-#qrcodeContainer {
-  margin-top: 10px;
-}
-
+/* Botão de fechar o modal */
 #modalQrCode .fechar-modal {
   position: absolute;
   top: 10px;
@@ -488,4 +488,78 @@ body {
   font-weight: bold;
   color: #333;
   cursor: pointer;
+}
+
+/* Container dos QR Codes gerados */
+#qrcodeContainer {
+  margin-top: 10px;
+}
+
+/* Conteúdo do modal com scroll se necessário */
+#modalQrCode .conteudo {
+  max-height: 80vh;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+/* ============================== */
+/* BLOCO DE QUANTIDADE DE QR CODE */
+/* ============================== */
+
+.quantidade-bloco {
+  background-color: #f9f9f9;   /* fundo claro para contraste */
+  border: 1px solid #ccc;      /* borda suave */
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.quantidade-bloco h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 18px;
+  color: #333;
+}
+
+.controle-quantidade {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.controle-quantidade button {
+  background-color: #d62828;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  font-size: 18px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.controle-quantidade input[type="number"] {
+  width: 60px;
+  text-align: center;
+  font-size: 16px;
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+
+  /* Remove setas (WebKit) */
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
+}
+
+/* Remove setas do input number em navegadores WebKit (Chrome, Edge, Safari) */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Remove setas do input number no Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }
