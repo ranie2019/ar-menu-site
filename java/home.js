@@ -283,8 +283,9 @@ function setupQrCodeGarcons() {
   const inputQtdQr = document.getElementById('qtdQr');
   const btnMais = document.getElementById('aumentarQr');
   const btnMenos = document.getElementById('diminuirQr');
+  const btnImprimir = document.getElementById('imprimirQr');
 
-  if (!modalQrCode || !qrCodeContainer || !btnFecharModal || !containerFormularios || !inputQtdQr || !btnMais || !btnMenos) {
+  if (!modalQrCode || !qrCodeContainer || !btnFecharModal || !containerFormularios || !inputQtdQr || !btnMais || !btnMenos || !btnImprimir) {
     console.error('Elementos do QR Code não encontrados.');
     return;
   }
@@ -294,21 +295,20 @@ function setupQrCodeGarcons() {
     qrCodeContainer.innerHTML = ''; // limpa tudo
 
     for (let i = 1; i <= quantidade; i++) {
-      const div = document.createElement('div');
-      div.style.textAlign = 'center';
-      div.style.marginBottom = '16px';
-
-      const titulo = document.createElement('p');
-      titulo.innerText = `Mesa ${i}`;
-      titulo.style.marginBottom = '8px';
-      titulo.style.fontWeight = 'bold';
+      const wrapper = document.createElement('div');
+      wrapper.classList.add('qrcode-wrapper');
 
       const qrDiv = document.createElement('div');
       qrDiv.id = `qr-${id}-${i}`;
+      qrDiv.classList.add('qrcode');
 
-      div.appendChild(titulo);
-      div.appendChild(qrDiv);
-      qrCodeContainer.appendChild(div);
+      const label = document.createElement('div');
+      label.classList.add('mesa-label');
+      label.innerText = `Mesa ${i}`;
+
+      wrapper.appendChild(qrDiv);
+      wrapper.appendChild(label);
+      qrCodeContainer.appendChild(wrapper);
 
       const urlPedido = `https://arcardapio.com.br/pedido.html?garcom=${encodeURIComponent(nome)}&mesa=${i}`;
 
@@ -342,8 +342,7 @@ function setupQrCodeGarcons() {
     if (isNaN(val)) val = 1;
     if (val < 99) {
       inputQtdQr.value = val + 1;
-      // Atualiza QR Codes automaticamente para o garçom atual ativo
-      if(currentGarcomId) atualizarQRCodesAtivos(currentGarcomId);
+      if (currentGarcomId) atualizarQRCodesAtivos(currentGarcomId);
     }
   });
 
@@ -352,13 +351,13 @@ function setupQrCodeGarcons() {
     if (isNaN(val)) val = 1;
     if (val > 1) {
       inputQtdQr.value = val - 1;
-      if(currentGarcomId) atualizarQRCodesAtivos(currentGarcomId);
+      if (currentGarcomId) atualizarQRCodesAtivos(currentGarcomId);
     }
   });
 
-  // Se o input quantidade mudar manualmente, atualiza QR Codes
+  // Atualiza QR Codes ao alterar input manualmente
   inputQtdQr.addEventListener('input', () => {
-    if(currentGarcomId) atualizarQRCodesAtivos(currentGarcomId);
+    if (currentGarcomId) atualizarQRCodesAtivos(currentGarcomId);
   });
 
   // Guarda o id do garçom que gerou o QR Code para atualizar na mudança da quantidade
@@ -383,12 +382,40 @@ function setupQrCodeGarcons() {
     currentGarcomId = null;
   });
 
+  // Fecha modal clicando fora do conteúdo
   window.addEventListener('click', (e) => {
     if (e.target === modalQrCode) {
       modalQrCode.classList.remove('ativo');
       qrCodeContainer.innerHTML = '';
       currentGarcomId = null;
     }
+  });
+
+  // Botão imprimir QR Codes
+  btnImprimir.addEventListener('click', () => {
+    if (!qrCodeContainer.innerHTML.trim()) return alert('Gere os QR Codes antes de imprimir.');
+
+    // Abre nova janela com apenas os QR Codes para imprimir
+    const printWindow = window.open('', '_blank');
+    printWindow.document.write(`
+      <html>
+        <head>
+          <title>Imprimir QR Codes</title>
+          <style>
+            body { margin: 20px; display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
+            .qrcode-wrapper { text-align: center; margin-bottom: 16px; }
+            .mesa-label { font-weight: bold; margin-top: 8px; font-size: 16px; }
+          </style>
+        </head>
+        <body>
+          ${qrCodeContainer.innerHTML}
+        </body>
+      </html>
+    `);
+    printWindow.document.close();
+    printWindow.focus();
+    printWindow.print();
+    printWindow.close();
   });
 }
 

@@ -563,3 +563,72 @@ input[type=number]::-webkit-outer-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+
+/* ============================== */
+/* BOTÃO IMPRIMIR QR CODE        */
+/* ============================== */
+
+.btn-imprimir {
+  margin-left: 15px;
+  background-color: #a1a2a1;
+  color: rgb(255, 255, 255);
+  border: none;
+  padding: 8px 12px;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-imprimir:hover {
+  background-color: #000000;
+}
+
+/* ============================== */
+/* IMPRESSÃO - SOMENTE QR CODES  */
+/* ============================== */
+@media print {
+  /* Esconde tudo no print */
+  body * {
+    visibility: hidden !important;
+  }
+
+  /* Torna visível só o container dos QR Codes e seus filhos */
+  #qrcodeContainer, #qrcodeContainer * {
+    visibility: visible !important;
+  }
+
+  /* Ajusta o container para ocupar toda a página e organizar em grid */
+  #qrcodeContainer {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    padding: 10mm;
+    background: white !important;
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(60mm, 1fr));
+    gap: 15mm;
+    justify-content: center;
+    align-content: start;
+    overflow: visible !important;
+    z-index: 9999;
+  }
+
+  /* Estilo para o rótulo das mesas (se tiver) */
+  .qrcode-wrapper {
+    text-align: center;
+  }
+
+  .mesa-label {
+    font-size: 12pt;
+    margin-top: 5px;
+    font-weight: bold;
+  }
+
+  /* Remove margens do papel para otimizar espaço */
+  @page {
+    margin: 10mm;
+  }
+}
