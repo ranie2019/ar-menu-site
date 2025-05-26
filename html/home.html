@@ -7,6 +7,9 @@
 
   <!-- Importa o CSS específico da página home -->
   <link rel="stylesheet" href="../css/home.css" />
+
+  <!-- A-Frame para exibição dos modelos 3D no tooltip -->
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
 </head>
 <body>
 
@@ -15,8 +18,6 @@
   <!-- ============================================== -->
   <header class="header">
     <h1 class="titulo">Bem-vindo(a) ao Sistema</h1>
-
-    <!-- Botão de perfil que redireciona para perfil.html -->
     <div class="profile-menu">
       <button id="profile-btn">Perfil</button>
     </div>
@@ -49,7 +50,6 @@
     <h2>Adicionar Garçons</h2>
     <div id="controleGarcons">
       <input type="number" id="quantidadeGarcons" value="1" min="1">
-
       <div id="botoesGarcons">
         <button id="btnMaisGarcom">+</button>
         <button id="btnMenosGarcom">-</button>
@@ -79,7 +79,35 @@
       <div id="qrcodeContainer" style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;"></div>
     </div>
   </div>
-  
+
+  <!-- ============================================== -->
+<!-- TOOLTIP COM VISUALIZAÇÃO DO MODELO 3D AO HOVER -->
+<!-- ============================================== -->
+<div id="tooltipPreview" class="tooltip-preview">
+  <a-scene
+    embedded
+    vr-mode-ui="enabled: false"
+    loading-screen="enabled: false"
+    device-orientation-permission-ui="enabled: false"
+    renderer="logarithmicDepthBuffer: true; antialias: true;"
+    background="color: #fff"
+  >
+    <a-assets>
+      <a-asset-item id="modelPreview" src=""></a-asset-item>
+    </a-assets>
+
+    <a-entity
+      id="modelViewer"
+      gltf-model="#modelPreview"
+      scale="2.5 2.5 2.5"
+      position="0 0 0"
+      rotation="0 180 0"
+    ></a-entity>
+
+    <a-entity camera look-controls position="0 1.6 3"></a-entity>
+  </a-scene>
+</div>
+
   <!-- =================================================== -->
   <!-- SCRIPTS JAVASCRIPT DA PÁGINA                        -->
   <!-- =================================================== -->
@@ -99,6 +127,30 @@
         const itemBox = e.target.closest('.item');
         if (itemBox) {
           itemBox.classList.toggle('desativado');
+        }
+      });
+
+      // ==============================
+      // TOOLTIP COM VISUALIZAÇÃO 3D
+      // ==============================
+      document.addEventListener('mouseover', (e) => {
+        const nome = e.target.closest('.produto-nome');
+        const tooltip = document.getElementById('tooltipPreview');
+        if (nome && nome.dataset.model) {
+          const modelPath = nome.dataset.model;
+          document.getElementById('modelPreview').setAttribute('src', modelPath);
+          document.getElementById('modelViewer').setAttribute('gltf-model', '#modelPreview');
+
+          const rect = nome.getBoundingClientRect();
+          tooltip.style.left = `${rect.right + 10}px`;
+          tooltip.style.top = `${rect.top}px`;
+          tooltip.style.display = 'block';
+        }
+      });
+
+      document.addEventListener('mouseout', (e) => {
+        if (e.target.classList.contains('produto-nome')) {
+          document.getElementById('tooltipPreview').style.display = 'none';
         }
       });
     });

@@ -165,11 +165,11 @@ body {
 
 /* Caixa individual que contém o nome de cada item do cardápio */
 .item-box {
-  background-color: #ffb342;         /* Fundo cinza claro para destacar */
+  background-color: #ffb342;         /* Fundo laranja claro para destacar */
   padding: 8px 12px;                 /* Espaçamento interno confortável */
   border-radius: 6px;                /* Bordas arredondadas */
   font-size: 14px;                   /* Fonte legível, tamanho médio */
-  color: #000000;                       /* Cor do texto cinza escuro */
+  color: #000000;                       /* Cor do texto preto */
   
   /* ==== Animação adicionada ==== */
   opacity: 0;                        /* Começa invisível */
@@ -186,50 +186,55 @@ body {
 
 /* ===================== Animação para entrada dos itens ===================== */
 
-/* Define a animação que desliza o item de baixo para cima com fade */
+/* Define a animação "fadeSlideUp":
+   - Os itens começam invisíveis e deslocados para baixo (20px)
+   - Durante 0% a 100% da animação, eles sobem para a posição original e aparecem
+   - Dá um efeito suave de entrada, deslizando e esmaecendo */
 @keyframes fadeSlideUp {
   0% {
-    opacity: 0;          /* Começa invisível */
-    transform: translateY(20px);  /* Começa deslocado 20px abaixo */
+    opacity: 0;                /* Totalmente invisível no começo */
+    transform: translateY(20px); /* Começa 20px abaixo da posição final */
   }
   100% {
-    opacity: 1;          /* Fica visível */
-    transform: translateY(0);     /* Volta para posição original */
+    opacity: 1;                /* Totalmente visível no final */
+    transform: translateY(0);     /* Volta para posição original, sem deslocamento */
   }
 }
 
-/* Aplica a animação nos itens do cardápio */
 .itens-container .item {
   animation: fadeSlideUp 0.6s ease-out;
-  animation-fill-mode: both;
-  opacity: 0; /* Garante que a animação inicie corretamente */
-  animation-delay: calc(var(--i, 0) * 0.1s); /* Permite delays variados se usar --i */
+  animation-fill-mode: both;       /* Mantém o estado final da animação */
+  opacity: 0;                      /* Inicia invisível, para animação funcionar */
+  animation-delay: calc(var(--i, 0) * 0.1s); /* Delay que aumenta para cada item, se usar a variável --i */
 }
 
-/* Responsividade para telas pequenas */
+/* Responsividade: adapta o layout para telas pequenas (largura até 768px)
+   Ajusta cabeçalho, título, menu e container de itens para caber melhor na tela menor */
+
 @media (max-width: 768px) {
   .header {
-    flex-direction: column;
-    padding: 10px 20px;
+    flex-direction: column; /* Muda o cabeçalho para coluna, empilhando os elementos verticalmente */
+    padding: 10px 20px;     /* Dá um espaçamento menor nas laterais */
   }
 
   .titulo {
-    font-size: 24px;
-    margin-top: 10px;
+    font-size: 24px;        /* Diminui o tamanho da fonte do título para caber melhor */
+    margin-top: 10px;       /* Dá um espaçamento acima do título para separar */
   }
 
   .cardapio-menu {
-    top: 10px;
+    top: 10px;              /* Ajusta a posição do menu no topo e à esquerda */
     left: 10px;
   }
 
   .itens-container {
-    top: 100px;
-    left: 10px;
-    max-width: calc(100% - 20px);
-    justify-content: center;
+    top: 100px;             /* Afasta o container dos itens do topo */
+    left: 10px;             /* Posiciona com margem esquerda */
+    max-width: calc(100% - 20px); /* Limita a largura para caber na tela, considerando margens */
+    justify-content: center; /* Centraliza os itens dentro do container */
   }
 }
+
 
 /* ==================== HOME - MENU PERFIL CASCATA ==================== */
 
@@ -270,23 +275,6 @@ body {
   background-color: #f1f1f1;
 }
 
-/* ============================== PRÉ-VISUALIZAÇÃO 3D ============================== */
-.item-box {
-  position: relative;
-}
-
-.model-preview {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  z-index: 1000;
-  background-color: #ffffff;
-  padding: 5px;
-  border: 1px solid #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-}
-
 /* ===================== HOME - MODAL DE PRÉ-VISUALIZAÇÃO ===================== */
 .model-preview-modal {
   position: absolute;
@@ -319,46 +307,49 @@ body {
 }
 
 /* ===================== ITENS DO CARDÁPIO ===================== */
+
+/* define o estilo visual e o comportamento básico de cada item do cardápio na interface. */
 .item {
-  background-color: #ffffff;
-  border: 1px solid #ffffff;
-  padding: 10px;
-  margin-bottom: 10px;
-  cursor: pointer;
-  transition: background 0.3s, opacity 0.3s;
+  background-color: #ffffff;  /* Fundo branco para o item */
+  border: 1px solid #ffffff;  /* Borda branca, praticamente invisível */
+  padding: 10px;              /* Espaçamento interno confortável */
+  margin-bottom: 10px;        /* Espaço abaixo para separar itens */
+  cursor: pointer;            /* Cursor muda para indicar que é clicável */
+  transition: background 0.3s, opacity 0.3s; /* Transição suave para background e opacidade */
 }
 
 /* Oculta a janela de informações do item ao desativar */
 .item.desativado {
-  background-color: #504e4e;
-  opacity: 0.5;
+  background-color: #504e4e;  /* Fundo escuro para indicar desativado */
+  opacity: 0.5;               /* Transparência para indicar estado inativo */
 }
 
 /* Janela que aparece dentro de cada item */
 .item .janela {
-  background: white;
-  border: 1px solid #ddd;
-  margin-top: 5px;
-  padding: 5px;
+  background: rgb(255, 255, 255); /* Fundo branco da janela interna */
+  border: 1px solid #ffffff;       /* Borda branca para suavizar a janela */
+  margin-top: 5px;                 /* Espaço acima para separar da área principal do item */
+  padding: 5px;                   /* Espaçamento interno da janela para o conteúdo */
 }
 
 /* Esconde a janela se item estiver desativado */
 .item.desativado .janela {
-  display: none;
+  display: none;                 /* Não mostra a janela se o item está desativado */
 }
 
-/* Estilo para item desativado */
+/* Estilo para o container do item quando desativado */
 .item-box.desativado {
-  background-color: #ccc; /* fundo cinza */
-  pointer-events: auto; /* permite clicar de novo */
-  opacity: 0.5;
+  background-color: #ccc;        /* Fundo cinza claro para indicar desativado */
+  pointer-events: auto;          /* Permite clique mesmo estando desativado */
+  opacity: 0.5;                  /* Transparência para indicar inatividade */
 }
 
-/* Quando desativado, não mostra tooltip nem cursor de interação */
+/* Quando desativado, não mostra tooltip nem muda cursor ao passar mouse */
 .item-box.desativado:hover .tooltip,
 .item-box.desativado:hover {
-  cursor: default;
+  cursor: default;               /* Cursor padrão, sem indicar interação */
 }
+
 
 /* ============================== */
 /* HOME - GARÇONS */
@@ -631,4 +622,37 @@ input[type=number] {
   @page {
     margin: 10mm;
   }
+}
+
+/* ============================== */
+/* PRÉ-VISUALIZAÇÃO 3D            */
+/* ============================== */
+
+/* Define a posição relativa para .item-box.
+   Isso é necessário para que a .model-preview (janela de visualização do modelo)
+   possa ser posicionada de forma absoluta dentro dela */
+.item-box {
+  position: relative;
+}
+
+/* Estiliza a janela onde o modelo 3D é pré-visualizado */
+.model-preview {
+  position: absolute;      /* Posiciona a janela em relação ao .item-box */
+  top: 100%;               /* Posiciona logo abaixo do item (100% da altura do item-box) */
+  left: 0;                 /* Alinha à esquerda do item-box */
+  z-index: 1000;           /* Garante que a visualização fique acima de outros elementos */
+  background-color: #585656;  /* Fundo cinza escuro para destacar o modelo */
+  padding: 5px;               /* Espaço interno para o modelo não encostar nas bordas */
+  border: 1px solid #4e4747;  /* Borda mais escura para dar contraste */
+  border-radius: 10px;        /* Bordas arredondadas para visual suave */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Sombra para destacar a janela do fundo */
+}
+
+/* Esconde botões padrão da visualização 3D como fullscreen e VR
+   Isso evita poluição visual na interface do preview */
+button.fullscreen-button,       /* Botão de fullscreen do visualizador */
+button#fullscreenButton,        /* Outro seletor possível para fullscreen */
+button.vr-enter-button,         /* Botão de entrada em modo VR (realidade virtual) */
+.a-enter-vr-button {            /* Classe usada internamente por A-Frame */
+  display: none !important;     /* Força que esses botões fiquem invisíveis */
 }

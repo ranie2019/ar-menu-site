@@ -10,7 +10,8 @@ const objetos3D = {
     'Redbull',
     'Absolut Vodka 1L',
     'Champagne Lorem',
-    'Jack Daniels'
+    'Jack Daniels',
+    'Champagne'
   ],
   pizzas: [
     'Presunto de Parma e Rúcula',
@@ -32,6 +33,5 @@ const objetos3D = {
     'Nuggets',
     'Aneis de Cebola'
   ]
-
 };
 
