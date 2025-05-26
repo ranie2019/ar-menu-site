@@ -26,10 +26,8 @@
   <!-- MENU DE CARDÁPIO: Botão + opções de categorias -->
   <!-- =================================================== -->
   <div class="cardapio-menu">
-    <!-- Botão principal para abrir o dropdown do cardápio -->
     <button id="cardapio-btn">Cardápio</button>
 
-    <!-- Opções de categorias disponíveis no cardápio -->
     <div id="dropdownCardapio" class="dropdown-cardapio">
       <button data-categoria="bebidas">Bebidas</button>
       <button data-categoria="pizzas">Pizzas</button>
@@ -50,10 +48,8 @@
   <section id="garconsSection">
     <h2>Adicionar Garçons</h2>
     <div id="controleGarcons">
-      <!-- Input numérico primeiro -->
       <input type="number" id="quantidadeGarcons" value="1" min="1">
 
-      <!-- Botões lado a lado depois do input -->
       <div id="botoesGarcons">
         <button id="btnMaisGarcom">+</button>
         <button id="btnMenosGarcom">-</button>
@@ -69,7 +65,17 @@
     <div class="conteudo-modal">
       <span class="fechar-modal">&times;</span>
       <h3>QR Code do Garçom</h3>
-      <div id="qrcodeContainer"></div>
+
+      <!-- Controles de quantidade de QR Codes (dentro do modal) -->
+      <div id="controleQtdQr" style="margin-bottom: 20px; text-align: center;">
+        <label for="qtdQr" style="margin-right: 10px;">Quantidade de QR Codes:</label>
+        <input type="number" id="qtdQr" value="1" min="1" style="width: 50px; text-align: center; margin-right: 10px;">
+        <button id="aumentarQr">+</button>
+        <button id="diminuirQr">-</button>
+      </div>
+
+      <!-- Container de QR Codes -->
+      <div id="qrcodeContainer" style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;"></div>
     </div>
   </div>
 
@@ -87,7 +93,7 @@
         });
       }
 
-      // Adiciona lógica de ativar/desativar item
+      // Ativa ou desativa item clicado
       document.addEventListener('click', (e) => {
         const itemBox = e.target.closest('.item');
         if (itemBox) {
@@ -97,10 +103,10 @@
     });
   </script>
 
-  <!-- Biblioteca QRCode.js (obrigatória para gerar QR local) -->
+  <!-- Biblioteca QRCode.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
-  <!-- Scripts da página (devem ser carregados após QRCode.js) -->
+  <!-- Scripts principais -->
   <script src="../java/home.js"></script>
   <script src="../java/cardapio.js"></script>
 

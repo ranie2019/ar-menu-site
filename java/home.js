@@ -278,49 +278,120 @@ function setupCadastroGarcons() {
 function setupQrCodeGarcons() {
   const modalQrCode = document.getElementById('modalQrCode');
   const qrCodeContainer = document.getElementById('qrcodeContainer');
-  const btnFecharModal = modalQrCode.querySelector('.fechar-modal');
+  const btnFecharModal = modalQrCode?.querySelector('.fechar-modal');
   const containerFormularios = document.getElementById('formularioGarcons');
+  const inputQtdQr = document.getElementById('qtdQr');
+  const btnMais = document.getElementById('aumentarQr');
+  const btnMenos = document.getElementById('diminuirQr');
 
-  containerFormularios.addEventListener('click', (e) => {
-    if (e.target.classList.contains('btn-qr') && !e.target.disabled) {
-      const id = e.target.getAttribute('data-id');
-      const nomeInput = document.querySelector(`.nome-garcom[data-id="${id}"]`);
-      const nome = nomeInput.value.trim() || `garcom${id}`;
+  if (!modalQrCode || !qrCodeContainer || !btnFecharModal || !containerFormularios || !inputQtdQr || !btnMais || !btnMenos) {
+    console.error('Elementos do QR Code não encontrados.');
+    return;
+  }
 
-      // URL final que o QR Code vai apontar
-      const urlPedido = `https://arcardapio.com.br/pedido.html?garcom=${encodeURIComponent(nome)}`;
+  // Função que gera os QR Codes com base na quantidade e nome do garçom
+  function gerarQRCodes(nome, quantidade, id) {
+    qrCodeContainer.innerHTML = ''; // limpa tudo
 
-      // Limpa conteúdo anterior
-      qrCodeContainer.innerHTML = '';
+    for (let i = 1; i <= quantidade; i++) {
+      const div = document.createElement('div');
+      div.style.textAlign = 'center';
+      div.style.marginBottom = '16px';
 
-      // Gera novo QR Code localmente (sem API externa)
-      new QRCode(qrCodeContainer, {
+      const titulo = document.createElement('p');
+      titulo.innerText = `Mesa ${i}`;
+      titulo.style.marginBottom = '8px';
+      titulo.style.fontWeight = 'bold';
+
+      const qrDiv = document.createElement('div');
+      qrDiv.id = `qr-${id}-${i}`;
+
+      div.appendChild(titulo);
+      div.appendChild(qrDiv);
+      qrCodeContainer.appendChild(div);
+
+      const urlPedido = `https://arcardapio.com.br/pedido.html?garcom=${encodeURIComponent(nome)}&mesa=${i}`;
+
+      new QRCode(qrDiv, {
         text: urlPedido,
-        width: 250,
-        height: 250,
+        width: 200,
+        height: 200,
         colorDark: "#000000",
         colorLight: "#ffffff",
         correctLevel: QRCode.CorrectLevel.H
       });
+    }
+  }
 
-      // Mostra modal
-      modalQrCode.classList.add('ativo');
+  // Atualiza QR Codes baseado no garçom ativo e quantidade
+  function atualizarQRCodesAtivos(id) {
+    const nomeInput = containerFormularios.querySelector(`.nome-garcom[data-id="${id}"]`);
+    if (!nomeInput) return;
+
+    const nome = nomeInput.value.trim() || `garcom${id}`;
+    const quantidade = parseInt(inputQtdQr.value);
+    if (isNaN(quantidade) || quantidade < 1) return;
+
+    gerarQRCodes(nome, quantidade, id);
+    modalQrCode.classList.add('ativo');
+  }
+
+  // Contador + e -
+  btnMais.addEventListener('click', () => {
+    let val = parseInt(inputQtdQr.value);
+    if (isNaN(val)) val = 1;
+    if (val < 99) {
+      inputQtdQr.value = val + 1;
+      // Atualiza QR Codes automaticamente para o garçom atual ativo
+      if(currentGarcomId) atualizarQRCodesAtivos(currentGarcomId);
     }
   });
 
-  // Fechar modal
+  btnMenos.addEventListener('click', () => {
+    let val = parseInt(inputQtdQr.value);
+    if (isNaN(val)) val = 1;
+    if (val > 1) {
+      inputQtdQr.value = val - 1;
+      if(currentGarcomId) atualizarQRCodesAtivos(currentGarcomId);
+    }
+  });
+
+  // Se o input quantidade mudar manualmente, atualiza QR Codes
+  inputQtdQr.addEventListener('input', () => {
+    if(currentGarcomId) atualizarQRCodesAtivos(currentGarcomId);
+  });
+
+  // Guarda o id do garçom que gerou o QR Code para atualizar na mudança da quantidade
+  let currentGarcomId = null;
+
+  // Clique no botão .btn-qr para gerar QR Code inicial
+  containerFormularios.addEventListener('click', (e) => {
+    const btnQr = e.target.closest('.btn-qr');
+    if (!btnQr || btnQr.disabled) return;
+
+    const id = btnQr.getAttribute('data-id');
+    if (!id) return;
+
+    currentGarcomId = id; // salva garçom ativo
+    atualizarQRCodesAtivos(id);
+  });
+
+  // Fecha modal
   btnFecharModal.addEventListener('click', () => {
     modalQrCode.classList.remove('ativo');
     qrCodeContainer.innerHTML = '';
+    currentGarcomId = null;
   });
 
   window.addEventListener('click', (e) => {
     if (e.target === modalQrCode) {
       modalQrCode.classList.remove('ativo');
       qrCodeContainer.innerHTML = '';
+      currentGarcomId = null;
     }
   });
 }
+
 
 // Chamada das funções
 setupCadastroGarcons();
