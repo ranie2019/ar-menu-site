@@ -25,10 +25,6 @@ body {
   font-size: 34px;                /* Define tamanho da fonte para ser visível e legível */
 }
 
-/* Container do menu de perfil, para controle de posicionamento do dropdown */
-.profile-menu {
-  position: relative;             /* Define posição relativa para que o dropdown seja posicionado corretamente em relação a ele */
-}
 
 /* Botão que abre o menu de perfil */
 #profile-btn {
@@ -40,63 +36,6 @@ body {
   cursor: pointer;                /* Muda cursor para mãozinha quando passa por cima (indica clicável) */
   font-weight: bold;              /* Texto em negrito para destaque */
   font-size: 24px;                /* Tamanho da fonte pequeno mas legível */
-}
-
-/* Dropdown que aparece ao clicar no botão perfil */
-.dropdown-content {
-  position: absolute;             /* Posição absoluta para aparecer em cima dos outros elementos */
-  top: 120%;                     /* Posiciona o dropdown logo abaixo do botão (120% do tamanho do botão) */
-  right: 0;                      /* Alinha o dropdown à direita do botão */
-  background-color: #111;        /* Fundo preto muito escuro para contraste */
-  color: white;                  /* Texto branco dentro do dropdown */
-  border-radius: 8px;            /* Cantos arredondados */
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3); /* Sombra suave para destacar o dropdown */
-  width: 250px;                  /* Largura fixa para o menu */
-  overflow: hidden;              /* Esconde conteúdo que ultrapasse o tamanho */
-  max-height: 0;                 /* Esconde o dropdown definindo altura zero inicialmente */
-  transition: max-height 0.3s ease; /* Animação suave para quando o dropdown abrir ou fechar */
-  z-index: 100;                  /* Garante que fique acima de outros elementos na página */
-}
-
-/* Estado ativo do dropdown: mostra o conteúdo expandindo a altura */
-.dropdown-content.show {
-  max-height: 500px;             /* Define altura máxima suficiente para mostrar o conteúdo */
-}
-
-/* Container para informações do usuário no dropdown */
-.user-info {
-  display: flex;                 /* Alinha avatar e texto em linha */
-  align-items: center;           /* Centraliza verticalmente */
-  gap: 10px;                    /* Espaço entre avatar e texto */
-  padding: 16px;                 /* Espaçamento interno para conforto visual */
-}
-
-/* Avatar circular com fundo rosa e texto branco */
-.avatar {
-  background-color: #e91e63;    /* Fundo rosa forte */
-  color: white;                 /* Texto branco */
-  width: 40px;                  /* Largura fixa */
-  height: 40px;                 /* Altura fixa para ser círculo */
-  font-size: 20px;              /* Texto maior para visibilidade */
-  font-weight: bold;            /* Texto em negrito */
-  display: flex;                /* Flex para centralizar texto */
-  align-items: center;          /* Centraliza verticalmente */
-  justify-content: center;      /* Centraliza horizontalmente */
-  border-radius: 50%;           /* Torna o elemento circular */
-}
-
-/* Estilo dos links no dropdown */
-.dropdown-content a {
-  display: block;               /* Cada link ocupa uma linha inteira */
-  padding: 12px 16px;           /* Espaçamento interno confortável para clique */
-  color: white;                 /* Cor do texto branca */
-  text-decoration: none;        /* Remove sublinhado dos links */
-  border-top: 1px solid #333;   /* Linha fina acima para separar itens */
-}
-
-/* Efeito visual ao passar o mouse sobre os links */
-.dropdown-content a:hover {
-  background-color: #222;       /* Fundo escuro para destacar o item */
 }
 
 /* ===================== CARDÁPIO CASCATA (botão e dropdown) ===================== */
@@ -132,24 +71,6 @@ body {
 /* Mostra o dropdown quando ativado */
 .dropdown-cardapio.show {
   display: block;
-}
-
-/* Botões dentro do dropdown do cardápio */
-.dropdown-cardapio button {
-  background-color: #e50914;  /* Mesma cor vermelha do botão principal */
-  color: white;               /* Texto branco */
-  border: none;               /* Sem borda */
-  border-radius: 6px;         /* Bordas arredondadas */
-  padding: 10px 15px;         /* Espaçamento interno para facilitar clique */
-  margin-bottom: 10px;        /* Espaçamento entre os botões */
-  cursor: pointer;            /* Cursor clicável */
-  font-size: 14px;            /* Fonte um pouco menor */
-  transition: background 0.3s; /* Transição suave na mudança de cor */
-}
-
-/* Efeito hover nos botões do dropdown do cardápio */
-.dropdown-cardapio button:hover {
-  background-color: #b20710;  /* Vermelho mais escuro ao passar o mouse */
 }
 
 /* ===================== Nomes dos objetos exibidos ao lado dos botões ===================== */
@@ -201,13 +122,6 @@ body {
   }
 }
 
-.itens-container .item {
-  animation: fadeSlideUp 0.6s ease-out;
-  animation-fill-mode: both;       /* Mantém o estado final da animação */
-  opacity: 0;                      /* Inicia invisível, para animação funcionar */
-  animation-delay: calc(var(--i, 0) * 0.1s); /* Delay que aumenta para cada item, se usar a variável --i */
-}
-
 /* Responsividade: adapta o layout para telas pequenas (largura até 768px)
    Ajusta cabeçalho, título, menu e container de itens para caber melhor na tela menor */
 
@@ -233,46 +147,6 @@ body {
     max-width: calc(100% - 20px); /* Limita a largura para caber na tela, considerando margens */
     justify-content: center; /* Centraliza os itens dentro do container */
   }
-}
-
-
-/* ==================== HOME - MENU PERFIL CASCATA ==================== */
-
-.profile-menu {
-  position: absolute;
-  top: 10px;
-  right: 20px;
-}
-
-.profile-menu button {
-  background-color: red;
-  color: white;
-  padding: 10px;
-  border: none;
-  cursor: pointer;
-  border-radius: 8px;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  right: 0;
-  background-color: white;
-  box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
-  z-index: 1;
-  border-radius: 8px;
-  min-width: 150px;
-}
-
-.dropdown-content a {
-  color: black;
-  padding: 10px 12px;
-  text-decoration: none;
-  display: block;
-}
-
-.dropdown-content a:hover {
-  background-color: #f1f1f1;
 }
 
 /* ===================== HOME - MODAL DE PRÉ-VISUALIZAÇÃO ===================== */
@@ -306,50 +180,11 @@ body {
   color: #333;
 }
 
-/* ===================== ITENS DO CARDÁPIO ===================== */
-
-/* define o estilo visual e o comportamento básico de cada item do cardápio na interface. */
-.item {
-  background-color: #ffffff;  /* Fundo branco para o item */
-  border: 1px solid #ffffff;  /* Borda branca, praticamente invisível */
-  padding: 10px;              /* Espaçamento interno confortável */
-  margin-bottom: 10px;        /* Espaço abaixo para separar itens */
-  cursor: pointer;            /* Cursor muda para indicar que é clicável */
-  transition: background 0.3s, opacity 0.3s; /* Transição suave para background e opacidade */
+/* Esconde botões padrão da visualização 3D como fullscreen e VR
+   Isso evita poluição visual na interface do preview */
+.a-enter-vr-button {            /* Classe usada internamente por A-Frame */
+  display: none !important;     /* Força que esses botões fiquem invisíveis */
 }
-
-/* Oculta a janela de informações do item ao desativar */
-.item.desativado {
-  background-color: #504e4e;  /* Fundo escuro para indicar desativado */
-  opacity: 0.5;               /* Transparência para indicar estado inativo */
-}
-
-/* Janela que aparece dentro de cada item */
-.item .janela {
-  background: rgb(255, 255, 255); /* Fundo branco da janela interna */
-  border: 1px solid #ffffff;       /* Borda branca para suavizar a janela */
-  margin-top: 5px;                 /* Espaço acima para separar da área principal do item */
-  padding: 5px;                   /* Espaçamento interno da janela para o conteúdo */
-}
-
-/* Esconde a janela se item estiver desativado */
-.item.desativado .janela {
-  display: none;                 /* Não mostra a janela se o item está desativado */
-}
-
-/* Estilo para o container do item quando desativado */
-.item-box.desativado {
-  background-color: #ccc;        /* Fundo cinza claro para indicar desativado */
-  pointer-events: auto;          /* Permite clique mesmo estando desativado */
-  opacity: 0.5;                  /* Transparência para indicar inatividade */
-}
-
-/* Quando desativado, não mostra tooltip nem muda cursor ao passar mouse */
-.item-box.desativado:hover .tooltip,
-.item-box.desativado:hover {
-  cursor: default;               /* Cursor padrão, sem indicar interação */
-}
-
 
 /* ============================== */
 /* HOME - GARÇONS */
@@ -622,37 +457,4 @@ input[type=number] {
   @page {
     margin: 10mm;
   }
-}
-
-/* ============================== */
-/* PRÉ-VISUALIZAÇÃO 3D            */
-/* ============================== */
-
-/* Define a posição relativa para .item-box.
-   Isso é necessário para que a .model-preview (janela de visualização do modelo)
-   possa ser posicionada de forma absoluta dentro dela */
-.item-box {
-  position: relative;
-}
-
-/* Estiliza a janela onde o modelo 3D é pré-visualizado */
-.model-preview {
-  position: absolute;      /* Posiciona a janela em relação ao .item-box */
-  top: 100%;               /* Posiciona logo abaixo do item (100% da altura do item-box) */
-  left: 0;                 /* Alinha à esquerda do item-box */
-  z-index: 1000;           /* Garante que a visualização fique acima de outros elementos */
-  background-color: #585656;  /* Fundo cinza escuro para destacar o modelo */
-  padding: 5px;               /* Espaço interno para o modelo não encostar nas bordas */
-  border: 1px solid #4e4747;  /* Borda mais escura para dar contraste */
-  border-radius: 10px;        /* Bordas arredondadas para visual suave */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Sombra para destacar a janela do fundo */
-}
-
-/* Esconde botões padrão da visualização 3D como fullscreen e VR
-   Isso evita poluição visual na interface do preview */
-button.fullscreen-button,       /* Botão de fullscreen do visualizador */
-button#fullscreenButton,        /* Outro seletor possível para fullscreen */
-button.vr-enter-button,         /* Botão de entrada em modo VR (realidade virtual) */
-.a-enter-vr-button {            /* Classe usada internamente por A-Frame */
-  display: none !important;     /* Força que esses botões fiquem invisíveis */
 }

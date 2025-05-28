@@ -18,6 +18,11 @@ const objetos3D = {
     'Mussarela',
     'Salami'
   ],
+  carnes: [
+    'Bisteca Suina Grelhada',
+    'Costela Bovina Cozida',
+    'Paleta Cordeiro'
+  ],
   lanches: [
     'Hamburguer',
     'Cheeseburger',
@@ -26,12 +31,13 @@ const objetos3D = {
   sobremesas: [
     'Sundae',
     'Chocolate Quente',
-    'Rosquinha de Chocolate'
+    'Rosquinha de Chocolate',
+    'Rosquinha de chocolate sortido'
   ],
   porcoes: [
     'Batata Frita',
     'Nuggets',
     'Aneis de Cebola'
-  ]
+  ],
 };
 
