@@ -3,6 +3,7 @@
 // ==============================
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Botões e containers principais
   const profileBtn = document.getElementById('profile-btn');
   const cardapioBtn = document.getElementById('cardapio-btn');
   const dropdownCardapio = document.getElementById('dropdownCardapio');
@@ -27,13 +28,14 @@ document.addEventListener('DOMContentLoaded', () => {
       dropdownCardapio.classList.toggle('show');
 
       if (!dropdownCardapio.classList.contains('show')) {
+        // Fecha e limpa
         container.style.display = 'none';
         container.innerHTML = '';
         categoriaAtiva = null;
         modelModal.style.display = 'none';
         modelModal.innerHTML = '';
       } else {
-        // Se já existe uma categoria ativa e ela não está desativada, mostra os itens automaticamente
+        // Se há categoria ativa, mostra os itens
         const botaoAtivo = document.querySelector(`#dropdownCardapio button[data-categoria="${categoriaAtiva}"]`);
         if (botaoAtivo && !botaoAtivo.classList.contains('desativado')) {
           mostrarItens(categoriaAtiva);
@@ -50,17 +52,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const categoria = btn.getAttribute('data-categoria');
     const id = 'btnEstado_' + categoria;
 
+    // Recupera estado salvo no localStorage
     const estaDesativado = localStorage.getItem(id) === 'true';
     if (estaDesativado) {
       btn.classList.add('desativado');
     }
 
+    // Clique no botão da categoria
     btn.addEventListener('click', () => {
       const desativadoAgora = !btn.classList.contains('desativado');
       btn.classList.toggle('desativado');
       localStorage.setItem(id, desativadoAgora);
 
       if (desativadoAgora) {
+        // Categoria foi desativada
         if (categoriaAtiva === categoria) {
           categoriaAtiva = null;
           container.innerHTML = '';
@@ -69,12 +74,20 @@ document.addEventListener('DOMContentLoaded', () => {
           modelModal.innerHTML = '';
         }
       } else {
+        // Categoria foi reativada
         categoriaAtiva = categoria;
         mostrarItens(categoria);
         container.style.display = 'flex';
+
+        // REMOVE A CLASSE 'desativado' DOS ITENS DA CATEGORIA
+        const itensDaCategoria = document.querySelectorAll(`.item-box[data-categoria="${categoria}"]`);
+        itensDaCategoria.forEach(item => {
+          item.classList.remove('desativado');
+        });
       }
     });
 
+    // Hover mostra itens sem alterar o estado
     btn.addEventListener('mouseenter', () => {
       if (!btn.classList.contains('desativado') && categoriaAtiva !== categoria) {
         mostrarItens(categoria);
@@ -83,9 +96,8 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ==============================
-  // CARDÁPIO - CONTROLE DE ITENS
+  // CARDÁPIO - Função para mostrar itens da categoria
   // ==============================
-
   function mostrarItens(categoria) {
     const container = document.getElementById('itensContainer');
 
@@ -107,6 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
         box.classList.add('desativado');
       }
 
+      // Clique desativa ou ativa o item
       box.addEventListener('click', () => {
         box.classList.toggle('desativado');
         const desativadoAgora = box.classList.contains('desativado');
@@ -116,11 +129,12 @@ document.addEventListener('DOMContentLoaded', () => {
       container.appendChild(box);
     });
 
+    // Aguarda renderizar para carregar os modelos
     requestAnimationFrame(() => adicionarPreview3D());
   }
 
   // ==============================
-  // PREVIEW 3D - HOVER NOS ITENS
+  // PREVIEW 3D - Hover sobre item-box
   // ==============================
 
   const MODEL_BASE_URL = 'https://ar-menu-models.s3.amazonaws.com/';
@@ -129,10 +143,12 @@ document.addEventListener('DOMContentLoaded', () => {
   modelModal.style.display = 'none';
   document.body.appendChild(modelModal);
 
+  // Converte nome para nome de arquivo .glb
   function nomeParaArquivo(nome) {
     return nome.trim().toLowerCase().replace(/\s+/g, '_') + '.glb';
   }
 
+  // Adiciona preview 3D aos itens com hover
   function adicionarPreview3D() {
     document.querySelectorAll('.item-box').forEach(item => {
       const nomeObjeto = item.textContent.trim();
