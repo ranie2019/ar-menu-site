@@ -162,13 +162,18 @@ body {
   position: absolute;
   width: 300px;
   height: 300px;
-  background-color: white;
-  border: 2px solid #ffffff;
+  background-color: rgb(0, 255, 162);
+  border: 2px solid #000000;
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 20px rgb(255, 255, 255);
   z-index: 9999;
   overflow: hidden;
 }
+.model-preview-modal {
+  background-color: #5a5757 !important; /* escuro sólido */
+}
+
+
 
 /* Botão ATIVADO */
 #dropdownCardapio button {
@@ -296,11 +301,6 @@ body {
   margin: 0; /* Remove margem extra */
 }
 
-/* Para Firefox */
-#quantidadeGarcons[type=number] {
-  -moz-appearance: textfield;
-}
-
 /* ============================== */
 /* MODAL - QR CODE GARÇOM        */
 /* ============================== */
@@ -403,9 +403,7 @@ body {
   border: 1px solid #ccc;
   border-radius: 5px;
 
-  /* Remove setas (WebKit) */
-  -webkit-appearance: none;
-  -moz-appearance: textfield;
+
 }
 
 /* Remove setas do input number em navegadores WebKit (Chrome, Edge, Safari) */
@@ -413,11 +411,6 @@ input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
-}
-
-/* Remove setas do input number no Firefox */
-input[type=number] {
-  -moz-appearance: textfield;
 }
 
 /* ============================== */

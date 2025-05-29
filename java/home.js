@@ -96,45 +96,46 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ==============================
-  // CARDÁPIO - Função para mostrar itens da categoria
-  // ==============================
-  function mostrarItens(categoria) {
-    const container = document.getElementById('itensContainer');
+// Função para exibir itens da categoria com animação e controle de estado
+// ==============================
+function mostrarItens(categoria) {
+  const container = document.getElementById('itensContainer');
+  if (!container || !objetos3D[categoria]) return;
 
-    if (!container || !objetos3D[categoria]) return;
+  container.innerHTML = '';
+  container.style.display = 'flex';
 
-    container.innerHTML = '';
-    container.style.display = 'flex';
+  objetos3D[categoria].forEach((nome, i) => {
+    const box = document.createElement('div');
+    box.className = 'item-box';
+    box.textContent = nome;
+    box.setAttribute('data-categoria', categoria);
+    box.style.animationDelay = `${i * 0.1}s`; // delay em cascata para animação
 
-    objetos3D[categoria].forEach((nome, i) => {
-      const box = document.createElement('div');
-      box.className = 'item-box';
-      box.textContent = nome;
-      box.setAttribute('data-categoria', categoria);
-      box.style.animationDelay = `${i * 0.1}s`;
+    // Verifica se o item está desativado no localStorage
+    const idItem = `itemEstado_${categoria}_${nome}`;
+    const estaDesativado = localStorage.getItem(idItem) === 'true';
+    if (estaDesativado) {
+      box.classList.add('desativado');
+    }
 
-      const idItem = `itemEstado_${categoria}_${nome}`;
-      const estaDesativado = localStorage.getItem(idItem) === 'true';
-      if (estaDesativado) {
-        box.classList.add('desativado');
-      }
-
-      // Clique desativa ou ativa o item
-      box.addEventListener('click', () => {
-        box.classList.toggle('desativado');
-        const desativadoAgora = box.classList.contains('desativado');
-        localStorage.setItem(idItem, desativadoAgora.toString());
-      });
-
-      container.appendChild(box);
+    // Clique no item alterna o estado de ativado/desativado
+    box.addEventListener('click', () => {
+      box.classList.toggle('desativado');
+      const desativadoAgora = box.classList.contains('desativado');
+      localStorage.setItem(idItem, desativadoAgora.toString());
     });
 
-    // Aguarda renderizar para carregar os modelos
-    requestAnimationFrame(() => adicionarPreview3D());
-  }
+    container.appendChild(box);
+  });
+
+  // Após renderizar todos os itens, ativa os previews 3D nos hovers
+  requestAnimationFrame(() => adicionarPreview3D());
+}
+
 
   // ==============================
-  // PREVIEW 3D - Hover sobre item-box
+  // PREVIEW 3D - HOVER NOS ITENS
   // ==============================
 
   const MODEL_BASE_URL = 'https://ar-menu-models.s3.amazonaws.com/';
@@ -143,45 +144,67 @@ document.addEventListener('DOMContentLoaded', () => {
   modelModal.style.display = 'none';
   document.body.appendChild(modelModal);
 
-  // Converte nome para nome de arquivo .glb
+  // Converte o nome do item para o nome de arquivo .glb
   function nomeParaArquivo(nome) {
     return nome.trim().toLowerCase().replace(/\s+/g, '_') + '.glb';
   }
 
-  // Adiciona preview 3D aos itens com hover
+  // Adiciona a pré-visualização 3D com animação no item em hover
   function adicionarPreview3D() {
-    document.querySelectorAll('.item-box').forEach(item => {
-      const nomeObjeto = item.textContent.trim();
-      const categoria = item.getAttribute('data-categoria');
-      const nomeArquivo = nomeParaArquivo(nomeObjeto);
-      const modelURL = `${MODEL_BASE_URL}${categoria}/${nomeArquivo}`;
+  document.querySelectorAll('.item-box').forEach(item => {
+    const nomeObjeto = item.textContent.trim();
+    const categoria = item.getAttribute('data-categoria');
+    const nomeArquivo = nomeParaArquivo(nomeObjeto);
+    const modelURL = `${MODEL_BASE_URL}${categoria}/${nomeArquivo}`;
 
-      item.addEventListener('mouseenter', () => {
-        if (item.classList.contains('desativado')) return;
+    item.addEventListener('mouseenter', () => {
+      if (item.classList.contains('desativado')) return;
 
-        const rect = item.getBoundingClientRect();
-        modelModal.style.left = `${rect.right + 10}px`;
-        modelModal.style.top = `${rect.top}px`;
-        modelModal.style.display = 'block';
+      const rect = item.getBoundingClientRect();
+      modelModal.style.left = `${rect.right + 10}px`;
+      modelModal.style.top = `${rect.top}px`;
+      modelModal.style.display = 'block';
 
-        modelModal.innerHTML = `
-          <a-scene embedded vr-mode-ui="enabled: false" style="width: 100%; height: 300px;">
-            <a-light type="ambient" intensity="1.0"></a-light>
-            <a-light type="directional" intensity="0.8" position="2 4 1"></a-light>
-            <a-entity position="0 1 -3">
-              <a-gltf-model src="${modelURL}" scale="1 1 1" rotation="0 180 0"></a-gltf-model>
-            </a-entity>
-            <a-camera position="0 2 0"></a-camera>
-          </a-scene>
-        `;
-      });
+      // Cena A-Frame com rotação contínua
+      modelModal.innerHTML = `
+        <a-scene embedded vr-mode-ui="enabled: false" style="width: 100%; height: 300px;">
+          <a-light type="ambient" intensity="1.0"></a-light>
+          <a-light type="directional" intensity="0.8" position="2 4 1"></a-light>
 
-      item.addEventListener('mouseleave', () => {
-        modelModal.style.display = 'none';
-        modelModal.innerHTML = '';
-      });
+          <a-entity position="0 1 -3" rotation="0 0 0">
+            <a-gltf-model 
+              src="${modelURL}" 
+              scale="1 1 1"
+              rotation="0 0 0"
+              animation="property: rotation; to: 0 360 0; loop: true; dur: 5000; easing: linear"
+            ></a-gltf-model>
+          </a-entity>
+
+          <a-camera position="0 2 0"></a-camera>
+        </a-scene>
+      `;
     });
+
+    item.addEventListener('mouseleave', () => {
+      modelModal.style.display = 'none';
+      modelModal.innerHTML = '';
+    });
+  });
+}
+
+
+  // Função para disparar as animações em sequência com loop
+  function iniciarAnimacaoLoop(modelo) {
+    let etapa = 1;
+    function loop() {
+      modelo.emit(`startAnim${etapa}`);
+      etapa++;
+      if (etapa > 6) etapa = 1;
+      setTimeout(loop, 1000);
+    }
+    loop();
   }
+
 });
 
 // ==============================

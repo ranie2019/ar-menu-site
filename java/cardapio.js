@@ -31,8 +31,7 @@ const objetos3D = {
   sobremesas: [
     'Sundae',
     'Chocolate Quente',
-    'Rosquinha de Chocolate',
-    'Rosquinha de chocolate sortido'
+    'Rosquinha de Chocolate'
   ],
   porcoes: [
     'Batata Frita',
