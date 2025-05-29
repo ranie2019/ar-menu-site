@@ -105,6 +105,14 @@ body {
   transition: background-color 0.2s ease, color 0.2s ease; /* Transição suave */
 }
 
+/*  Bloco de estilo para itens que foram desativados manualmente.
+  Aplica aparência diferenciada e mantém interatividade. */
+.item-box.desativado {
+  opacity: 0.4; /* Define transparência para indicar visualmente que o item está desativado */
+  pointer-events: auto; /* Garante que o item ainda pode ser clicado (mesmo estando "apagado") */
+  background-color: #999 !important; /* Altera a cor de fundo para cinza, com !important para sobrepor outros estilos */
+}
+
 /* ===================== Animação para entrada dos itens ===================== */
 
 /* Define a animação "fadeSlideUp":
@@ -185,6 +193,28 @@ body {
 .a-enter-vr-button {            /* Classe usada internamente por A-Frame */
   display: none !important;     /* Força que esses botões fiquem invisíveis */
 }
+
+/* CSS do modal de preview 3D */
+.model-preview-modal {
+  position: fixed;
+  z-index: 9999;
+  width: 320px;
+  height: 320px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  padding: 5px;
+}
+
+/* Imagem de carregamento */
+.loading-spinner {
+  width: 80px;
+  height: 80px;
+  margin: 100px auto;
+  display: block;
+}
+
 
 /* ============================== */
 /* HOME - GARÇONS */

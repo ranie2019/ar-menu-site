@@ -32,6 +32,13 @@ document.addEventListener('DOMContentLoaded', () => {
         categoriaAtiva = null;
         modelModal.style.display = 'none';
         modelModal.innerHTML = '';
+      } else {
+        // Se já existe uma categoria ativa e ela não está desativada, mostra os itens automaticamente
+        const botaoAtivo = document.querySelector(`#dropdownCardapio button[data-categoria="${categoriaAtiva}"]`);
+        if (botaoAtivo && !botaoAtivo.classList.contains('desativado')) {
+          mostrarItens(categoriaAtiva);
+          container.style.display = 'flex';
+        }
       }
     });
   }
@@ -100,7 +107,6 @@ document.addEventListener('DOMContentLoaded', () => {
         box.classList.add('desativado');
       }
 
-      // Toggle ativo/desativado ao clicar
       box.addEventListener('click', () => {
         box.classList.toggle('desativado');
         const desativadoAgora = box.classList.contains('desativado');
@@ -110,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
       container.appendChild(box);
     });
 
-    adicionarPreview3D(); // mantém funcionalidade do preview
+    requestAnimationFrame(() => adicionarPreview3D());
   }
 
   // ==============================
@@ -135,7 +141,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const modelURL = `${MODEL_BASE_URL}${categoria}/${nomeArquivo}`;
 
       item.addEventListener('mouseenter', () => {
-        // Não mostra preview se o item estiver desativado
         if (item.classList.contains('desativado')) return;
 
         const rect = item.getBoundingClientRect();
@@ -144,12 +149,13 @@ document.addEventListener('DOMContentLoaded', () => {
         modelModal.style.display = 'block';
 
         modelModal.innerHTML = `
-          <a-scene embedded vr-mode-ui="enabled: false" style="width: 300px; height: 200px;">
-            <a-entity position="0 0 -3">
-              <a-gltf-model src="${modelURL}" scale="0.5 0.5 0.5"></a-gltf-model>
+          <a-scene embedded vr-mode-ui="enabled: false" style="width: 100%; height: 300px;">
+            <a-light type="ambient" intensity="1.0"></a-light>
+            <a-light type="directional" intensity="0.8" position="2 4 1"></a-light>
+            <a-entity position="0 1 -3">
+              <a-gltf-model src="${modelURL}" scale="1 1 1" rotation="0 180 0"></a-gltf-model>
             </a-entity>
-            <a-light type="ambient" intensity="1.2"></a-light>
-            <a-camera position="0 0 0"></a-camera>
+            <a-camera position="0 2 0"></a-camera>
           </a-scene>
         `;
       });
@@ -210,17 +216,16 @@ function setupCadastroGarcons() {
   }
 
   function adicionarEventosValidacao(form) {
-    const inputNome = form.querySelector('.nome-garcom');
-    const inputTel = form.querySelector('.tel-garcom');
+  const inputNome = form.querySelector('.nome-garcom');
+  const inputTel = form.querySelector('.tel-garcom');
 
-    inputNome.addEventListener('input', () => validarCampos(form));
-    inputTel.addEventListener('input', () => {
-      validarCampos(form);
-      if (inputTel.value.trim() === '') {
-        inputNome.value = '';
-      }
-    });
-  }
+  inputNome.addEventListener('input', () => validarCampos(form));
+  inputTel.addEventListener('input', () => {
+    inputTel.value = formatarCelular(inputTel.value);
+    validarCampos(form);
+  });
+}
+
 
   function gerarFormulariosGarcons(qtd) {
     const dadosAtuais = {};
