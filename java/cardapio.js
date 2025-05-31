@@ -21,7 +21,8 @@ const objetos3D = {
   carnes: [
     'Bisteca Suina Grelhada',
     'Costela Bovina Cozida',
-    'Paleta Cordeiro'
+    'Paleta Cordeiro',
+    "Lombo de Porco"
   ],
   lanches: [
     'Hamburguer',
@@ -30,7 +31,7 @@ const objetos3D = {
   ],
   sobremesas: [
     'Sundae',
-    'Chocolate Quente',
+    'Cupcake de Chocolate',
     'Rosquinha de Chocolate'
   ],
   porcoes: [
