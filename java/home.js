@@ -354,7 +354,7 @@ function setupQrCodeGarcons() {
       wrapper.appendChild(label);
       qrCodeContainer.appendChild(wrapper);
 
-      const urlPedido = `https://arcardapio.com.br/pedido.html?garcom=${encodeURIComponent(nome)}&mesa=${i}`;
+      const urlPedido = `https://app/app.html?garcom=${encodeURIComponent(nome)}&mesa=${i}`;
 
       new QRCode(qrDiv, {
         text: urlPedido,
